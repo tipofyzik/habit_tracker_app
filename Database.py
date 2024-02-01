@@ -118,7 +118,7 @@ class Database:
             new_value: type depends on the charateristic
                 Value that replaces the old one."""
         cursor=self.database.cursor()
-        cursor.execute(f"PRAGMA table_info(habits)")
+        cursor.execute("PRAGMA table_info(habits)")
         habits_columns = cursor.fetchall()
         check = False
         for col in habits_columns:
@@ -140,9 +140,9 @@ class Database:
             habit_name: str
                 Name of the habit to be deleted from the database."""
         cursor=self.database.cursor()
-        cursor.execute(f"""DELETE FROM habits WHERE name = ?""",
+        cursor.execute("""DELETE FROM habits WHERE name = ?""",
                     (habit_name,))
-        cursor.execute(f"""DELETE FROM habits_log WHERE name = ?""",
+        cursor.execute("""DELETE FROM habits_log WHERE name = ?""",
                     (habit_name,))
         self.database.commit()
         cursor.close()
