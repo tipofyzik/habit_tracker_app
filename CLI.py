@@ -63,7 +63,7 @@ class Command_line_interface:
         Returns the user to the start menu.
 
         No parameters."""
-        return
+        pass
 
 
 
@@ -148,7 +148,7 @@ class Command_line_interface:
                     ]
                 ).ask()
             else:
-                new_value = q.text(f"Write new value for chosen characteristic: ").ask()
+                new_value = q.text("Write new value for chosen characteristic: ").ask()
             habit.update_habit_characteristic(characteristic, new_value)
             self.database.update_habit_characteristic_in_database(habit, characteristic, new_value)
             print(f"Habit \"{habit.name}\" updated successfully!")
@@ -276,7 +276,7 @@ class Command_line_interface:
         if habits_name != []:
             habits_name = [str(habit[0]) for habit in habits_name]            
             print(f"The longest streak is on habit(s): {', '.join(map(str, habits_name))}." + 
-                "\nDuration of the streak:""", longest_streak)
+                  "\nDuration of the streak:", longest_streak)
         else: 
             print("You don't have any trackable habits!")
 
