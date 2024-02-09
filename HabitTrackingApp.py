@@ -1,4 +1,4 @@
-from CLI import Command_line_interface as CLI
+from CLI import CommandLineInterface as CLI
 
 
 

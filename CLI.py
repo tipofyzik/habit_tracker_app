@@ -1,5 +1,5 @@
 # Importing necessary classes and modules for the app to work
-from DatabaseAnalysis import Database_analyzer
+from DatabaseAnalyzer import DatabaseAnalyzer
 from PredefinedHabits import predefine_habits
 from Habit import Habit, delete_habit_object
 from Database import Database
@@ -10,13 +10,16 @@ import questionary as q
 
 
 
-class Command_line_interface:
+class CommandLineInterface:
     """
-    A class to represent the user interface."""
+    A class to represent the user interface.
+    
+    Attributes:
+    """
         
-    def __init__(self) -> None:
-        self.database = Database()
-        self.analyzer = Database_analyzer(self.database.name)
+    def __init__(self, database_name: str = "AppDatabase.db") -> None:
+        self.database = Database(database_name)
+        self.analyzer = DatabaseAnalyzer(self.database.name)
         self.habit_container: dict[str, Habit] = {}
         self.upload_existing_habits()
 
@@ -109,7 +112,12 @@ class Command_line_interface:
                 "Year"
             ]
         ).ask()
-        time_span = q.text(f"How many {periodicity.lower()}s do you want to develop your habit?\nWrite a number: ").ask()
+        while True:
+            try:
+                time_span = int(q.text(f"How many {periodicity.lower()}s do you want to develop your habit?\nWrite a number: ").ask())
+                break
+            except ValueError:
+                print("You require to enter a whole number!")
         try:
             new_habit = Habit(name, periodicity, time_span)
             self.database.insert_habit_to_database(new_habit)
@@ -118,7 +126,6 @@ class Command_line_interface:
             delete_habit_object(new_habit)
         except IntegrityError:
             print(f"""You already have habit with the name \'{name}\'!\nTry again.""")
-
 
     def update_habit(self) -> None:
         """
@@ -261,9 +268,12 @@ class Command_line_interface:
             ]
         ).ask()        
         habits = self.analyzer.return_habits_with_the_same_periodicity(periodicity)
+        details = []
         if habits != []:
             for habit in habits:
-                print(habit)
+                details.append([*habit])
+            columns = ("Name", "Periodicity", "Time span", "State")
+            print(tabulate(details, headers = columns, tablefmt="github"))
         else: 
             print(f"You don't have any trackable habits with \'{periodicity}\' periodicity!")
 
@@ -347,14 +357,30 @@ class Command_line_interface:
             print("Predefined habits already uploaded!")
 
     def delete_predefined_habits(self) -> None:
-        try:
-            habits = predefine_habits()
-            for habit in habits:
-                del self.habit_container[habit.name]
-                self.database.delete_habit_from_database(habit.name)
-            print("All predefined habits deleted successfully!")
-        except KeyError:
-            print("Predefined habits already deleted!")
+        """
+        """
+        def perform_action() -> None:
+            try:
+                habits = predefine_habits()
+                for habit in habits:
+                    del self.habit_container[habit.name]
+                    self.database.delete_habit_from_database(habit.name)
+                print("All predefined habits deleted successfully!")
+            except KeyError:
+                print("Predefined habits already deleted!")
+
+        choice_handler = {
+            "Yes": perform_action,
+            "No": self.back_to_start_menu,
+        }
+        question = q.select(
+            "Are you sure you want to delete all predefined habits?",
+            choices = [
+                "Yes",
+                "No"
+            ]
+        ).ask()
+        choice_handler[question]()
 
     def delete_all_habits(self) -> None:
         """
@@ -379,7 +405,6 @@ class Command_line_interface:
         choice_handler[question]()
         print("All defined habits deleted successfully!")
         
-
 
 
     # Exiting the application

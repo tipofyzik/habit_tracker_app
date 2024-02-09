@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 from dateutil.relativedelta import relativedelta 
 
 
@@ -18,13 +18,38 @@ def return_current_date_and_time() -> list:
 
 class Habit:
     """
-    A class to represent a habit."""
+    A class to represent a habit.
+    
+    Attributes:
+        name: str
+            Name to be given to the habit.
+        periodicity: str
+            Period unit (or habits period) for a habit that shows within which period
+            the user performs the habit, namely, within hour/day/week/etc.
+        time_span: int
+            Duration for which the user wants to develop the habit. Combining with periodicity we 
+            set, for example, 2 days or 5 weeks. 
+        state: str, optimal
+            The state of a habit, namely, \'In progress\'/\'Completed\'/\'Dropped\'.
+            Defaults to \'In progress\'.
+        current_streak: int, optimal
+            The current streak represents a number of successful, consequtive habit executions.
+        longest_strek: int, optimal
+            Stores the longest streak that has ever been achieved for a habit.
+        start_time: str, optimal
+            Stores a time of creation, i.e., starting a habit.
+        start_date: str, optimal
+            Stores a date of creation, i.e., starting a habit.
+        end_time: str, optimal
+            Stores the time of finishing, i.e., when habit is completed.
+        end_time: str, optimal
+            Stores the date of finishing, i.e., when habit is completed."""
+
 
     def __init__ (self, name: str, periodicity: str, 
                   time_span: int, state: str = "In progress",
                   current_streak: int = 0, longest_streak: int = 0,
-                  start_time: str = return_current_date_and_time()[0],
-                  start_date: str = return_current_date_and_time()[1],
+                  start_time: str = None, start_date: str = None,
                   end_time: str = None, end_date: str = None) -> None:
         """
         Constructs all the necessary attributes for the person object.
@@ -32,10 +57,10 @@ class Habit:
         Parameters:
             name: str
                 Name to be given to the habit.
-            periodicity: str, optimal
+            periodicity: str
                 Period unit (or habits period) for a habit that shows within which period
                 the user performs the habit, namely, within hour/day/week/etc.
-            time_span: int, optimal
+            time_span: int
                 Duration for which the user wants to develop the habit. Combining with periodicity we 
                 set, for example, 2 days or 5 weeks. 
             state: str, optimal
@@ -63,7 +88,10 @@ class Habit:
         # Secondary habit information to log it
         self.current_streak = current_streak
         self.longest_streak = longest_streak
-        self.start_time, self.start_date = start_time, start_date
+        if start_time == None and start_date == None:
+            self.start_time, self.start_date = return_current_date_and_time()
+        else:
+            self.start_time, self.start_date = start_time, start_date
         self.end_time, self.end_date = end_time, end_date
 
 
@@ -111,19 +139,11 @@ class Habit:
         end_datetime = datetime.combine(end_date, end_time)
 
         time_difference = relativedelta(current_datetime, end_datetime)
-        if self.periodicity == "Hour" and time_difference.hours > 0:
-            self.current_streak = 0
-            print("Time has passed and your current streak has been reset!")
-        elif self.periodicity == "Day" and time_difference.days > 0:
-            self.current_streak = 0
-            print("Time has passed and your current streak has been reset!")
-        elif self.periodicity == "Week" and time_difference.weeks > 0:
-            self.current_streak = 0
-            print("Time has passed and your current streak has been reset!")
-        elif self.periodicity == "Month" and time_difference.months > 0:
-            self.current_streak = 0
-            print("Time has passed and your current streak has been reset!")
-        elif self.periodicity == "Year" and time_difference.years > 0:
+        if ((self.periodicity == "Hour" and time_difference.hours > 0)  or 
+            (self.periodicity == "Day" and time_difference.days > 0) or 
+            (self.periodicity == "Week" and time_difference.weeks > 0) or 
+            (self.periodicity == "Month" and time_difference.months > 0) or 
+            (self.periodicity == "Year" and time_difference.years > 0)):
             self.current_streak = 0
             print("Time has passed and your current streak has been reset!")
         

@@ -5,11 +5,14 @@ from Habit import Habit
 
 class Database:
     """
-    A class to represent a database to store and retrieve information."""
+    A class to represent a database to store and retrieve information.
+    
+    Attributes:
+    """
     
     def __init__(self, name: str = "AppDatabase.db"):
         self.name = name
-        self.database = self.connect_database(name)
+        self.database = self.connect_database(self.name)
 
     # Database creation
     def connect_database(self, name: str = "AppDatabase.db") -> sqlite3.Connection:
@@ -21,7 +24,6 @@ class Database:
                 Name to be given for database."""
         database = sqlite3.connect(name)
         self.create_database_tables(database)
-        self.database = database
         return database
 
     def create_database_tables(self, database: sqlite3.Connection) -> None:
@@ -97,19 +99,27 @@ class Database:
             habit: Habit
                 Habit that have to be added to database."""
         cursor=self.database.cursor()
-        cursor.execute("""INSERT INTO habits VALUES(?, ?, ?, ?)""",
-                    (habit.name, habit.periodicity, 
-                    habit.time_span, habit.state,))
-        cursor.execute("""INSERT INTO habits_log VALUES(?, ?, ?, ?, ?, ?, ?)""",
-                    (habit.name, habit.current_streak, habit.longest_streak, 
-                    habit.start_time, habit.start_date, habit.end_time, habit.end_date,))
+        cursor.execute("""INSERT INTO habits VALUES(?, ?, ?, ?)""", (
+            habit.name, 
+            habit.periodicity, 
+            habit.time_span, 
+            habit.state,))
+        cursor.execute("""INSERT INTO habits_log VALUES(?, ?, ?, ?, ?, ?, ?)""", (
+            habit.name, 
+            habit.current_streak, 
+            habit.longest_streak, 
+            habit.start_time, 
+            habit.start_date, 
+            habit.end_time, 
+            habit.end_date,))
         self.database.commit()
         cursor.close()
 
     def update_habit_characteristic_in_database(self, habit: Habit, characteristic_name: str, 
                                   new_value)-> None:
         """
-        Changes the habit's value of a given characteristic
+        Changes the habit's value of a given characteristic.
+
         Parameters:
             habit: Habit
                 Habit which updated parameter should be updated in the database.
@@ -120,15 +130,13 @@ class Database:
         cursor=self.database.cursor()
         cursor.execute("PRAGMA table_info(habits)")
         habits_columns = cursor.fetchall()
-        check = False
-        for col in habits_columns:
-            if col[1] == characteristic_name:
-                cursor.execute(f"""UPDATE habits SET {characteristic_name} = ? WHERE name = ?""",
-                            (new_value, habit.name,))
-                check = True
-        if check == False:
+        habits_columns = [item[1] for item in habits_columns]
+        if characteristic_name in habits_columns:
+            cursor.execute(f"""UPDATE habits SET {characteristic_name} = ? WHERE name = ?""",
+                           (new_value, habit.name,))
+        else:
             cursor.execute(f"""UPDATE habits_log SET {characteristic_name} = ? WHERE name = ?""",
-                        (new_value, habit.name,))
+                           (new_value, habit.name,))
         self.database.commit()
         cursor.close()
 
@@ -140,9 +148,9 @@ class Database:
             habit_name: str
                 Name of the habit to be deleted from the database."""
         cursor=self.database.cursor()
-        cursor.execute("""DELETE FROM habits WHERE name = ?""",
-                    (habit_name,))
-        cursor.execute("""DELETE FROM habits_log WHERE name = ?""",
-                    (habit_name,))
+        cursor.execute("""DELETE FROM habits WHERE name = ?""", 
+                       (habit_name,))
+        cursor.execute("""DELETE FROM habits_log WHERE name = ?""", 
+                       (habit_name,))
         self.database.commit()
         cursor.close()
