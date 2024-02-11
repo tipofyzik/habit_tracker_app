@@ -156,12 +156,3 @@ class Habit:
             return True
         else:
             return False
-        
-
-
-# To delete class object we should define outer function, as if we try to define such function
-# inside the class, this can lead to unexpected behavior
-def delete_habit_object(habit: Habit) -> None:
-    """
-    Deletes habit class object."""
-    del habit

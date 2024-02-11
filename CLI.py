@@ -1,7 +1,7 @@
 # Importing necessary classes and modules for the app to work
 from DatabaseAnalyzer import DatabaseAnalyzer
 from PredefinedHabits import predefine_habits
-from Habit import Habit, delete_habit_object
+from Habit import Habit
 from Database import Database
 
 from sqlite3 import IntegrityError
@@ -132,7 +132,6 @@ class CommandLineInterface:
             self.database.insert_habit_to_database(new_habit)
             self.habit_container[new_habit.name] = new_habit
             print(f"Habit \"{new_habit.name}\" added successfully!")
-            delete_habit_object(new_habit)
         except IntegrityError:
             print(f"""You already have habit with the name \'{name}\'!\nTry again.""")
 
@@ -173,7 +172,6 @@ class CommandLineInterface:
             habit.update_habit_characteristic(characteristic, new_value)
             self.database.update_habit_characteristic_in_database(habit, [characteristic], [new_value])
             print(f"Habit \"{habit.name}\" updated successfully!")
-            delete_habit_object(habit)
         except ValueError:
             print("You don't have any trackable habits!")
 
@@ -200,7 +198,6 @@ class CommandLineInterface:
                                                               ["current_streak", "longest_streak"], 
                                                               [habit.current_streak, habit.longest_streak])
         self.database.update_habit_logs(habit)
-        delete_habit_object(habit)
 
     def view_habit_history(self) -> None:
         """
@@ -225,7 +222,6 @@ class CommandLineInterface:
             if history == []: return
             columns =  ("Name", "Current streak", "Longest streak", "End time", "End date")
             print(tabulate(history, headers = columns, tablefmt="github"))
-            delete_habit_object(habit)
         except ValueError:
             print("You don't have any trackable habits!")
 
@@ -241,7 +237,6 @@ class CommandLineInterface:
             self.database.delete_habit_from_database(habit.name)
             del self.habit_container[name]
             print(f"Habit \"{habit.name}\" deleted successfully!")
-            delete_habit_object(habit)
         except ValueError:
             print("You don't have any trackable habits!")
 

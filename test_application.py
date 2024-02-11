@@ -1,4 +1,4 @@
-from Habit import Habit, delete_habit_object
+from Habit import Habit
 from Database import Database
 from DatabaseAnalyzer import DatabaseAnalyzer
 
@@ -23,7 +23,6 @@ class TestHabitClass(unittest.TestCase):
         - Assert that created instance is an instance oh the Habit class."""
         habit_obj = Habit('name', 'day', 0)
         self.assertIsInstance(habit_obj, Habit)
-        delete_habit_object(habit_obj)
 
     def test_habit_update(self) -> None:
         """
@@ -37,7 +36,6 @@ class TestHabitClass(unittest.TestCase):
         new_value = 'week'
         habit_obj.update_habit_characteristic(characteristic, new_value)
         self.assertEqual(habit_obj.periodicity, new_value)
-        delete_habit_object(habit_obj)
 
     def test_habit_check_off(self) -> None:
         """
@@ -53,7 +51,6 @@ class TestHabitClass(unittest.TestCase):
         longest_streak += 1
         self.assertEqual(current_streak, habit_obj.current_streak)
         self.assertEqual(longest_streak, habit_obj.longest_streak)
-        delete_habit_object(habit_obj)
 
     def test_habit_completion(self) -> None:
         """
@@ -65,7 +62,6 @@ class TestHabitClass(unittest.TestCase):
         habit_obj = Habit('name', 'day', 0)
         habit_obj.complete_habit()
         self.assertEqual(habit_obj.state, 'Completed')
-        delete_habit_object(habit_obj)
 
 
 
@@ -105,7 +101,6 @@ class TestDatabaseAndDatabaseAnalyzer(unittest.TestCase):
 
         # Delete data not to raise error in the next tests
         self.database.delete_habit_from_database(habit_obj.name)
-        delete_habit_object(habit_obj)
 
     def test_habit_update(self) -> None:
         """
@@ -129,8 +124,6 @@ class TestDatabaseAndDatabaseAnalyzer(unittest.TestCase):
         
         # Delete data not to raise error in the next tests
         self.database.delete_habit_from_database(habit_obj.name)
-        delete_habit_object(habit_obj)
-        delete_habit_object(retrieved_habit)
 
     def test_habit_deletion_from_database(self) -> None:
         """
@@ -149,7 +142,6 @@ class TestDatabaseAndDatabaseAnalyzer(unittest.TestCase):
         self.assertIsNone(retrived_habit_info)
 
         # Delete data not to raise error in the next tests
-        delete_habit_object(habit_obj)
 
     def test_returning_streaks(self) -> None:
         """
@@ -168,9 +160,7 @@ class TestDatabaseAndDatabaseAnalyzer(unittest.TestCase):
 
         # Delete data not to raise error in the next tests
         self.database.delete_habit_from_database(habit_obj1.name)
-        self.database.delete_habit_from_database(habit_obj2.name)
-        delete_habit_object(habit_obj1)
-        delete_habit_object(habit_obj2)                
+        self.database.delete_habit_from_database(habit_obj2.name)               
 
     def test_return_habits(self) -> None:
         """
@@ -209,8 +199,6 @@ class TestDatabaseAndDatabaseAnalyzer(unittest.TestCase):
         # Delete data not to raise error in the next tests
         self.database.delete_habit_from_database(habit_obj1.name)
         self.database.delete_habit_from_database(habit_obj2.name)
-        delete_habit_object(habit_obj1)
-        delete_habit_object(habit_obj2)
 
 
 
