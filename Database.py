@@ -12,7 +12,7 @@ class Database:
     
     def __init__(self, name: str = "AppDatabase.db"):
         self.name = name
-        self.database = self.connect_database(self.name)
+        self.database = self.connect_database(name)
 
     # Database creation
     def connect_database(self, name: str = "AppDatabase.db") -> sqlite3.Connection:
