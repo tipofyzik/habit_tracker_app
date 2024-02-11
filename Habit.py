@@ -45,7 +45,6 @@ class Habit:
         end_time: str, optimal
             Stores the date of finishing, i.e., when habit is completed."""
 
-
     def __init__ (self, name: str, periodicity: str, 
                   time_span: int, state: str = "In progress",
                   current_streak: int = 0, longest_streak: int = 0,

@@ -41,18 +41,22 @@ class Database:
                 name TEXT PRIMARY KEY,
                 periodicity TEXT,
                 time_span INTEGER,
-                state TEXT
-        )
-    ''')
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS habits_log (
-                name TEXT PRIMARY KEY,
+                state TEXT,
                 current_streak INTEGER,
                 longest_streak INTEGER,
                 start_time TEXT,
                 start_date TEXT,
                 end_time TEXT,
                 end_date TEXT
+        )
+    ''')
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS habits_log (
+                name TEXT,
+                current_streak INTEGER,
+                longest_streak INTEGER,
+                end_time TEXT,
+                end_date TEXT                
         )
     ''')
         database.commit()
@@ -99,46 +103,62 @@ class Database:
             habit: Habit
                 Habit that have to be added to database."""
         cursor=self.database.cursor()
-        cursor.execute("""INSERT INTO habits VALUES(?, ?, ?, ?)""", (
+        cursor.execute("""INSERT INTO habits VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""", (
             habit.name, 
             habit.periodicity, 
             habit.time_span, 
-            habit.state,))
-        cursor.execute("""INSERT INTO habits_log VALUES(?, ?, ?, ?, ?, ?, ?)""", (
-            habit.name, 
+            habit.state,
             habit.current_streak, 
             habit.longest_streak, 
             habit.start_time, 
             habit.start_date, 
             habit.end_time, 
             habit.end_date,))
+        cursor.execute("""INSERT INTO habits_log VALUES(?, ?, ?, ?, ?)""", (
+            habit.name,
+            habit.current_streak, 
+            habit.longest_streak, 
+            habit.end_time, 
+            habit.end_date,))
         self.database.commit()
         cursor.close()
 
-    def update_habit_characteristic_in_database(self, habit: Habit, characteristic_name: str, 
-                                  new_value)-> None:
+    def update_habit_characteristic_in_database(self, habit: Habit, characteristics: list, 
+                                                new_values: list)-> None:
         """
         Changes the habit's value of a given characteristic.
 
         Parameters:
             habit: Habit
-                Habit which updated parameter should be updated in the database.
+                Habit whose updated parameter should be updated in the database.
             characteristic_name: str
                 Name of the characteristic to be updated.
             new_value: type depends on the charateristic
                 Value that replaces the old one."""
         cursor=self.database.cursor()
-        cursor.execute("PRAGMA table_info(habits)")
-        habits_columns = cursor.fetchall()
-        habits_columns = [item[1] for item in habits_columns]
-        if characteristic_name in habits_columns:
-            cursor.execute(f"""UPDATE habits SET {characteristic_name} = ? WHERE name = ?""",
-                           (new_value, habit.name,))
-        else:
-            cursor.execute(f"""UPDATE habits_log SET {characteristic_name} = ? WHERE name = ?""",
-                           (new_value, habit.name,))
+        for characteristic, new_value in zip(characteristics, new_values):
+            cursor.execute(f"""UPDATE habits SET {characteristic} = ? WHERE name = ?""",
+                            (new_value, habit.name,))
         self.database.commit()
         cursor.close()
+
+    def update_habit_logs(self, habit: Habit) -> None:
+        """
+        Updates habits_log table by adding new row with secondary information.
+        
+        Parameters:
+            habit: Habit
+                Habit whose updated secondary parameters should be added into logы."""
+        cursor=self.database.cursor()
+        cursor.execute("""INSERT INTO habits_log VALUES(?, ?, ?, ?, ?)""", (
+            habit.name,
+            habit.current_streak, 
+            habit.longest_streak, 
+            habit.end_time, 
+            habit.end_date,))
+        self.database.commit()
+        cursor.close()
+        
 
     def delete_habit_from_database(self, habit_name: str) -> None:
         """

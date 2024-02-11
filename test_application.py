@@ -120,7 +120,7 @@ class TestDatabaseAndDatabaseAnalyzer(unittest.TestCase):
         habit_obj = Habit('name', 'periodicity', 0)
         self.database.insert_habit_to_database(habit_obj)
         habit_obj.update_habit_characteristic('periodicity', 'week')
-        self.database.update_habit_characteristic_in_database(habit_obj, 'periodicity', 'week')
+        self.database.update_habit_characteristic_in_database(habit_obj, ['periodicity'], ['week'])
 
         retrived_habit_info = self.analyzer.return_detailed_information_about_habit(habit_obj.name)[1]
         retrieved_habit = Habit(*retrived_habit_info)
@@ -132,7 +132,7 @@ class TestDatabaseAndDatabaseAnalyzer(unittest.TestCase):
         delete_habit_object(habit_obj)
         delete_habit_object(retrieved_habit)
 
-    def test_habit_deletion(self) -> None:
+    def test_habit_deletion_from_database(self) -> None:
         """
         Creates habit instance and inserts it into the TestDatabase.db.
 

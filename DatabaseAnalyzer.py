@@ -20,23 +20,11 @@ class DatabaseAnalyzer:
 
     def return_currently_tracked_habits(self) -> list:
         """
-        Returns all currently tracked habits, i.e., which state is 'In progress'
+        Returns all currently tracked habits, i.e., whose state is 'In progress'
         
         No parameters."""
         cursor = sqlite3.connect(self.database_name).cursor()
-        cursor.execute("""SELECT 
-                       habits.name, 
-                       habits.periodicity, 
-                       habits.time_span,
-                       habits.state, 
-                       habits_log.current_streak, 
-                       habits_log.longest_streak,
-                       habits_log.start_time, 
-                       habits_log.start_date, 
-                       habits_log.end_time, 
-                       habits_log.end_date 
-                       FROM habits
-                       INNER JOIN habits_log ON habits.name = habits_log.name""")        
+        cursor.execute("""SELECT * FROM habits""")        
         habits = list(cursor.fetchall())
         cursor.close()
         return habits
@@ -45,7 +33,9 @@ class DatabaseAnalyzer:
         """
         Returns all currently tracked habits with a certain periodicity (hour/day/etc.).
         
-        No parameters."""
+        Parameters:
+            periodicity: str
+                Periodicity of habits to be returned."""
         cursor = sqlite3.connect(self.database_name).cursor()
         cursor.execute("SELECT * FROM habits WHERE periodicity = ?", 
                        (periodicity,))
@@ -59,9 +49,9 @@ class DatabaseAnalyzer:
         
         No parameters."""
         cursor = sqlite3.connect(self.database_name).cursor()
-        cursor.execute("SELECT MAX(longest_streak) FROM habits_log")
+        cursor.execute("SELECT MAX(longest_streak) FROM habits")
         max_longest_streak = cursor.fetchone()[0]
-        cursor.execute("SELECT name FROM habits_log WHERE longest_streak = ?", 
+        cursor.execute("SELECT name FROM habits WHERE longest_streak = ?", 
                        (max_longest_streak,))
         habits_names_with_longest_streak = cursor.fetchall()
         cursor.close()
@@ -71,9 +61,11 @@ class DatabaseAnalyzer:
         """
         Returns the longest streak of the certain habit.
         
-        No parameters."""
+        Parameters:
+            habit_name: str
+                Name of the habit whose longest streak to be returned."""
         cursor = sqlite3.connect(self.database_name).cursor()
-        cursor.execute("SELECT longest_streak FROM habits_log WHERE name = ?", 
+        cursor.execute("SELECT longest_streak FROM habits WHERE name = ?", 
                        (habit_name,))
         streak = cursor.fetchone()[0]
         cursor.close()
@@ -81,22 +73,24 @@ class DatabaseAnalyzer:
     
     def return_detailed_information_about_habit(self, habit_name: str) -> list:
         """
-        Returns all information about the certain habit
-        """
+        Returns all information about the certain habit.
+        
+        Parameters:
+            habit_name: str
+                Name of the habit whose the whole information to be returned."""
         cursor = sqlite3.connect(self.database_name).cursor()
         cursor.execute("""SELECT 
                        habits.name AS 'Habit name', 
                        habits.periodicity AS Periodicity, 
                        habits.time_span AS 'Time span',
                        habits.state AS 'State', 
-                       habits_log.current_streak AS 'Current streak', 
-                       habits_log.longest_streak AS 'Longest streak', 
-                       habits_log.start_time AS 'Start time', 
-                       habits_log.start_date AS 'Start date', 
-                       habits_log.end_time AS 'End time',
-                       habits_log.end_date AS 'End date' 
+                       habits.current_streak AS 'Current streak', 
+                       habits.longest_streak AS 'Longest streak', 
+                       habits.start_time AS 'Start time', 
+                       habits.start_date AS 'Start date', 
+                       habits.end_time AS 'End time',
+                       habits.end_date AS 'End date' 
                        FROM habits
-                       INNER JOIN habits_log ON habits.name = habits_log.name
                        WHERE habits.name = ?""", (habit_name,))
         row = cursor.fetchone()
         if row is None:
@@ -105,3 +99,25 @@ class DatabaseAnalyzer:
         column_names = [description[0] for description in cursor.description]
         cursor.close()
         return [column_names, habit_info]
+
+    def return_habit_history(self, habit_name: str) -> list:
+        """
+        Returns first 10 completion events of a certain habit.
+        
+        Parameters:
+            habit_name: str
+                Name of the habit whose history to be returned."""
+        cursor = sqlite3.connect(self.database_name).cursor()
+        cursor.execute("""SELECT 
+                       habits_log.name AS 'Habit name', 
+                       habits_log.current_streak AS 'Current streak', 
+                       habits_log.longest_streak AS 'Longest streak', 
+                       habits_log.end_time AS 'End time',
+                       habits_log.end_date AS 'End date'
+                       FROM habits_log
+                       WHERE habits_log.name = ?
+                       LIMIT 10 OFFSET 1""", (habit_name,))
+        history = cursor.fetchall()
+        history = list(history)
+        cursor.close()
+        return history

@@ -45,6 +45,7 @@ class CommandLineInterface:
         choice_handler = {
             "Add, update, or delete habit": self.habit_handler,
             "Check-off habit": self.check_off_habit, 
+            "View habit history": self.view_habit_history,
             "Analyze habits": self.analyze_database,
             "Additional options": self.additional_options,
             "Quit": self.quit_program
@@ -53,7 +54,8 @@ class CommandLineInterface:
             "What do you want to do?",
             choices = [
                 "Add, update, or delete habit", 
-                "Check-off habit", 
+                "Check-off habit",
+                "View habit history", 
                 "Analyze habits", 
                 "Additional options",
                 "Quit"
@@ -157,7 +159,7 @@ class CommandLineInterface:
             else:
                 new_value = q.text("Write new value for chosen characteristic: ").ask()
             habit.update_habit_characteristic(characteristic, new_value)
-            self.database.update_habit_characteristic_in_database(habit, characteristic, new_value)
+            self.database.update_habit_characteristic_in_database(habit, [characteristic], [new_value])
             print(f"Habit \"{habit.name}\" updated successfully!")
             delete_habit_object(habit)
         except ValueError:
@@ -176,16 +178,44 @@ class CommandLineInterface:
         habit = self.habit_container[name]
         habit.check_off_habit()
         print(f"Habit \"{habit.name}\" shecked-off successfully!")
-        self.database.update_habit_characteristic_in_database(habit, "end_date", habit.end_date)
-        self.database.update_habit_characteristic_in_database(habit, "end_time", habit.end_time)
-
+        self.database.update_habit_characteristic_in_database(habit, 
+                                                              ["end_time", "end_date"], 
+                                                              [habit.end_time, habit.end_date])
         if habit.complete_habit():
-            self.database.update_habit_characteristic_in_database(habit, "state", habit.state)
+            self.database.update_habit_characteristic_in_database(habit, ["state"], [habit.state])
             print("You've developed your habit successfully! Congratulations!")
-
-        self.database.update_habit_characteristic_in_database(habit, "current_streak", habit.current_streak)
-        self.database.update_habit_characteristic_in_database(habit, "longest_streak", habit.longest_streak)
+        self.database.update_habit_characteristic_in_database(habit, 
+                                                              ["current_streak", "longest_streak"], 
+                                                              [habit.current_streak, habit.longest_streak])
+        self.database.update_habit_logs(habit)
         delete_habit_object(habit)
+
+    def view_habit_history(self) -> None:
+        """
+        Displays history of a certain habit. This function displays the data 
+        upon habit creation and the history of 10 successful habit completions.
+        
+        No parameters."""
+        try:
+            choices = list(self.habit_container.keys())
+            choices.append("Return back")            
+            name = q.select("Select the name of the habit which history you want to see: ",
+                            choices = choices).ask()
+            if name == "Return back": return
+
+            habit = self.habit_container[name]
+            details = [habit.name, habit.periodicity, habit.time_span, habit.start_time, habit.start_date]
+            columns =  ("Name", "Periodicity", "Time span", "Start time", "Start date")
+            print(details, columns)
+            print(tabulate([details], headers = columns, tablefmt="github"), '\n')
+
+            history = self.analyzer.return_habit_history(name)
+            if history == []: return
+            columns =  ("Name", "Current streak", "Longest streak", "End time", "End date")
+            print(tabulate(history, headers = columns, tablefmt="github"))
+            delete_habit_object(habit)
+        except ValueError:
+            print("You don't have any trackable habits!")
 
     def delete_habit(self) -> None:
         """
@@ -271,7 +301,8 @@ class CommandLineInterface:
         details = []
         if habits != []:
             for habit in habits:
-                details.append([*habit])
+                habit = Habit(*habit)
+                details.append([habit.name, habit.periodicity, habit.time_span, habit.state])
             columns = ("Name", "Periodicity", "Time span", "State")
             print(tabulate(details, headers = columns, tablefmt="github"))
         else: 
@@ -358,7 +389,9 @@ class CommandLineInterface:
 
     def delete_predefined_habits(self) -> None:
         """
-        """
+        Deletes predefined habits from the database and from the habit_container.
+        
+        No parameters."""
         def perform_action() -> None:
             try:
                 habits = predefine_habits()
