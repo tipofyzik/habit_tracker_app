@@ -18,13 +18,14 @@ class DatabaseAnalyzer:
                 Name of the database to be analyzed."""
         self.database_name = database_name
 
-    def return_currently_tracked_habits(self) -> list:
+    def return_currently_tracked_habits(self, state = "In progress") -> list:
         """
-        Returns all currently tracked habits, i.e., whose state is 'In progress'
+        Returns all currently tracked habits, i.e., whose state is \"In progress\"
         
         No parameters."""
         cursor = sqlite3.connect(self.database_name).cursor()
-        cursor.execute("""SELECT * FROM habits""")        
+        cursor.execute("SELECT * FROM habits WHERE state = ?",
+                       (state,))        
         habits = list(cursor.fetchall())
         cursor.close()
         return habits
@@ -71,6 +72,20 @@ class DatabaseAnalyzer:
         cursor.close()
         return streak
     
+    
+    
+    def return_developed_habits(self, state = "Finished") -> list:
+        """
+        Returns all developed habits, i.e., whose state is \"Finished\"
+        
+        No parameters."""
+        cursor = sqlite3.connect(self.database_name).cursor()
+        cursor.execute("SELECT * FROM habits WHERE state = ?",
+                       (state,))        
+        habits = list(cursor.fetchall())
+        cursor.close()
+        return habits
+
     def return_detailed_information_about_habit(self, habit_name: str) -> list:
         """
         Returns all information about the certain habit.

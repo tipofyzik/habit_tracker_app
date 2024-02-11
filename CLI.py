@@ -21,15 +21,22 @@ class CommandLineInterface:
         self.database = Database(database_name)
         self.analyzer = DatabaseAnalyzer(self.database.name)
         self.habit_container: dict[str, Habit] = {}
-        self.upload_existing_habits()
+        self.upload_existing_habits(self.analyzer)
 
-    def upload_existing_habits(self) -> None:
+    def upload_existing_habits(self, analyzer: DatabaseAnalyzer) -> None:
         """
         Uploads already created habits from database to the habit_container for the application to work.
 
-        No parameters."""
-        habits = self.analyzer.return_currently_tracked_habits()
-        for habit in habits:
+        Parameters:
+            analyzer: DatabaseAnalyzer
+                Analyzer that retrieves habits from database."""
+        tracked_habits = analyzer.return_currently_tracked_habits()
+        for habit in tracked_habits:
+            habit = Habit(*habit)
+            self.habit_container[habit.name] = habit
+
+        developed_habits = analyzer.return_developed_habits()
+        for habit in developed_habits:
             habit = Habit(*habit)
             self.habit_container[habit.name] = habit
 
@@ -157,7 +164,12 @@ class CommandLineInterface:
                     ]
                 ).ask()
             else:
-                new_value = q.text("Write new value for chosen characteristic: ").ask()
+                while True:
+                    try:
+                        new_value = int(q.text("Write new value for time span: ").ask())
+                        break
+                    except ValueError:
+                        print("You require to enter a whole number!")
             habit.update_habit_characteristic(characteristic, new_value)
             self.database.update_habit_characteristic_in_database(habit, [characteristic], [new_value])
             print(f"Habit \"{habit.name}\" updated successfully!")
