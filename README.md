@@ -6,3 +6,12 @@
 You need to intall Python with the version 3.11.3 and higher.
 Also, all required modules to install you can find in the 'requirements.txt'.
 ## How to install
+
+
+# 1. About method selection
+
+# 2. How to use
+
+# 3. Further developing
+
+# 4. Sources
