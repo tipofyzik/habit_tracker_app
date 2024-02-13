@@ -15,3 +15,5 @@ All required modules to install you can find in the 'requirements.txt'.
 # 3. Further developing
 
 # 4. Sources
+[1] https://questionary.readthedocs.io/en/stable/
+[2] 
