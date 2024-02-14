@@ -8,9 +8,9 @@ All required modules to install you can find in the file **"requirements.txt"**.
 ## How to install
 1. Install python from the [official site](https://www.python.org/downloads/).
 2. Install required modules:
-   2.1 [**python-dateutil**](https://pypi.org/project/python-dateutil/)
-   2.2 [**tabulate**](https://pypi.org/project/tabulate/)
-   2.3 [**questionary**](https://questionary.readthedocs.io/en/stable/)
+   2.1 [**python-dateutil**](https://pypi.org/project/python-dateutil/)  
+   2.2 [**tabulate**](https://pypi.org/project/tabulate/)  
+   2.3 [**questionary**](https://questionary.readthedocs.io/en/stable/)  
 3. Download the folder "Habit tracker". It contains **"HabitTrackingApp.py"** file that runs the application.
 
 
