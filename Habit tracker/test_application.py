@@ -61,7 +61,7 @@ class TestHabitClass(unittest.TestCase):
         - Assert that completed habit have \'Completed\' state."""
         habit_obj = Habit('name', 'day', 0)
         habit_obj.complete_habit()
-        self.assertEqual(habit_obj.state, 'Completed')
+        self.assertEqual(habit_obj.state, "Completed")
 
 
 

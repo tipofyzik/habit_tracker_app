@@ -255,6 +255,7 @@ class CommandLineInterface:
         No parameters."""
         choice_handler = {
             "Show me all currently tracked habits": self.show_currently_tracked_habits,
+            "Show me all already developed habits": self.show_all_developed_habits,
             "Show me all habits with the same periodicity": self.show_habits_with_the_same_periodicity,
             "Show me the longest streak among currently tracked habits": self.show_longest_streak_of_all_habits,
             "Show me the longest streak of a certain habit": self.show_longest_streaks_of_given_habit,
@@ -266,6 +267,7 @@ class CommandLineInterface:
             "What do you want to analyze?",
             choices = [
                 "Show me all currently tracked habits",
+                "Show me all already developed habits",
                 "Show me all habits with the same periodicity",
                 "Show me the longest streak among currently tracked habits",
                 "Show me the longest streak of a certain habit",
@@ -292,6 +294,22 @@ class CommandLineInterface:
             print(tabulate(details, headers = columns, tablefmt="github"))
         else: 
             print("You don't have any trackable habits!")
+
+    def show_all_developed_habits(self) -> None:
+        """
+        Displays all already developed habits.
+        
+        No parameters."""
+        habits = self.analyzer.return_developed_habits()
+        details = []
+        if habits != []:
+            for habit in habits:
+                habit = Habit(*habit)
+                details.append([habit.name, habit.periodicity, habit.time_span, habit.state])
+            columns = ("Name", "Periodicity", "Time span", "State")
+            print(tabulate(details, headers = columns, tablefmt="github"))
+        else: 
+            print("You don't have any developed habits!")        
 
     def show_habits_with_the_same_periodicity(self) -> None:
         """

@@ -13,3 +13,6 @@ def predefine_habits() -> list[Habit]:
     habit4 = Habit("Take medicines", "Hour", 6)
     habit5 = Habit("Plant trees for charity", "Year", 3)
     return [habit1, habit2, habit3, habit4, habit5] 
+
+def upload_history() -> None:
+    pass

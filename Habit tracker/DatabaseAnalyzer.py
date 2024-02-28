@@ -74,9 +74,9 @@ class DatabaseAnalyzer:
     
     
     
-    def return_developed_habits(self, state = "Finished") -> list:
+    def return_developed_habits(self, state = "Completed") -> list:
         """
-        Returns all developed habits, i.e., whose state is \"Finished\"
+        Returns all developed habits, i.e., whose state is \"Completed\"
         
         No parameters."""
         cursor = sqlite3.connect(self.database_name).cursor()
@@ -115,7 +115,7 @@ class DatabaseAnalyzer:
         cursor.close()
         return [column_names, habit_info]
 
-    def return_habit_history(self, habit_name: str) -> list:
+    def return_habit_history(self, habit_name: str, rows_amount: int = 10) -> list:
         """
         Returns first 10 completion events of a certain habit.
         
@@ -123,7 +123,7 @@ class DatabaseAnalyzer:
             habit_name: str
                 Name of the habit whose history to be returned."""
         cursor = sqlite3.connect(self.database_name).cursor()
-        cursor.execute("""SELECT 
+        cursor.execute(f"""SELECT 
                        habits_log.name AS 'Habit name', 
                        habits_log.current_streak AS 'Current streak', 
                        habits_log.longest_streak AS 'Longest streak', 
@@ -131,7 +131,7 @@ class DatabaseAnalyzer:
                        habits_log.end_date AS 'End date'
                        FROM habits_log
                        WHERE habits_log.name = ?
-                       LIMIT 10 OFFSET 1""", (habit_name,))
+                       LIMIT {rows_amount} OFFSET 1""", (habit_name,))
         history = cursor.fetchall()
         history = list(history)
         cursor.close()
