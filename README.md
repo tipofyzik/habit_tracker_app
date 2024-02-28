@@ -7,7 +7,7 @@ You need to intall Python with the version 3.11.3 and higher.
 All required modules to install you can find in the file **"requirements.txt"**.
 ## How to install
 1. Install Python from the [official site](https://www.python.org/downloads/).  
-2. Install required modules:  
+2. Install required modules (follow the links):  
    2.1 [**python-dateutil**](https://pypi.org/project/python-dateutil/) - necessary for logging data.  
    2.2 [**tabulate**](https://pypi.org/project/tabulate/) - necessary for displaying data.  
    2.3 [**questionary**](https://questionary.readthedocs.io/en/stable/) - necessary for convenient user interaction.  
@@ -22,10 +22,30 @@ For this project, I used object-oriented and functional programming because it a
 **·** **_CommandLineInterface class_** represents an interaction between user and the application.  
 
 My project also contains 3 files more: PredefinedHabits.py, HabitTrackingApp.py, test_application.py.  
-First module upon user request uploads predefined by me habits into database. Moreover, it contains a data for 4 weeks.
-
+**PredefinedHabits.py:** Upon user request, the first module uploads pre-defined template habits, specified by me, into the database. Also it upload history of these habits. The purpose is to show how habits can be defined and developed.  
+**HabitTrackingApp.py:** Runs the application.  
+**test_application.py:** Tests core application funcitonality (inserting data to/extracting data from database, updating habit characteristics and database, etc.).  
 
 # 2. How to use
+To run the application you should accomplish the following steps:  
+1. Download the folder "Habit tracker" and put it wherever you want. Don't forget to install required libraries!
+2. Open the command-line interface and specify the path to directory where "HabitTrackingApp.py" file is located. Do so by writing:
+**cd Your/path/to/file**
+Example: cd C:\Users\user\Downloads\Habit tracker
+3. Now, write the following to run the application:
+**python HabitTrackingApp.py**
+
+
+Once you run the appliation, you will see the greeting message and the menu. The menu contains 6 options:  
+**·** Add, update, or delete habit - suggest you to create new and update/delete existing habit
+**·** Check-off habit - suggest you to complete habit for specified period. For example, you have daily habit "Brush my teeth". By this option, you mark this habit as completed for "today". 
+**·** View habit history - you can look at "checking-off" history of a certain habit. For example, you should accomplish you habit day for 20 days and let's say you'd done 17/20 days. This option will show you last 10 succesful completions of the habit.
+**·** Analyze habits - suggest you to analyze existing habits. You can look at all developed habits or ask for the longest streak of a certain habit.  
+**·** Additional options - here you can upload/delete predefined habits or delete all your habits at all.  
+**·** Quit - terminates the applicaiton.  
+
+
+## Examples of usage
 
 # 3. Further developing
 
