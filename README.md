@@ -26,7 +26,11 @@ My project also contains 3 files more: PredefinedHabits.py, HabitTrackingApp.py,
 **HabitTrackingApp.py:** Runs the application.  
 **test_application.py:** Tests core application funcitonality (inserting data to/extracting data from database, updating habit characteristics and database, etc.).  
 
-# 2. How to use
+# 2. Implementation specifics
+
+
+
+# 3. How to use
 To run the application you should accomplish the following steps:  
 1. Download the folder "Habit tracker" and put it wherever you want. Don't forget to install required libraries!
 2. Open the command-line interface and specify the path to directory where "HabitTrackingApp.py" file is located. Do so by writing:
@@ -47,9 +51,9 @@ Once you run the appliation, you will see the greeting message and the menu. The
 
 ## Examples of usage
 
-# 3. Further developing
+# 4. Further developing
 
-# 4. Sources
+# 5. Sources
 [1] https://pypi.org/project/python-dateutil/  
 [2] https://pypi.org/project/tabulate/  
 [3] https://questionary.readthedocs.io/en/stable/  
