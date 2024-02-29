@@ -50,6 +50,6 @@ Once you run the appliation, you will see the greeting message and the menu. The
 # 3. Further developing
 
 # 4. Sources
-[1] https://pypi.org/project/python-dateutil/
-[2] https://pypi.org/project/tabulate/
-[3] https://questionary.readthedocs.io/en/stable/
+[1] https://pypi.org/project/python-dateutil/  
+[2] https://pypi.org/project/tabulate/  
+[3] https://questionary.readthedocs.io/en/stable/  
