@@ -1,6 +1,6 @@
 # Importing necessary classes and modules for the app to work
 from DatabaseAnalyzer import DatabaseAnalyzer
-from PredefinedHabits import predefine_habits
+from PredefinedHabits import predefine_habits, generate_habit_history
 from Habit import Habit
 from Database import Database
 
@@ -412,6 +412,7 @@ class CommandLineInterface:
             for habit in habits:
                 self.habit_container[habit.name] = habit
                 self.database.insert_habit_to_database(habit)
+                generate_habit_history(habit, self.database)
             print("All predefined habits added successfully!")
         except IntegrityError:
             print("Predefined habits already uploaded!")

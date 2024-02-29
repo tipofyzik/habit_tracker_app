@@ -129,12 +129,12 @@ class Habit:
 
         No parameters."""
         current_time, current_date = return_current_date_and_time()
-        current_date = datetime.strptime(current_date, '%Y-%m-%d')
         current_time = datetime.strptime(current_time, '%H:%M:%S').time()
+        current_date = datetime.strptime(current_date, '%Y-%m-%d')
         current_datetime = datetime.combine(current_date, current_time)
 
-        end_date = datetime.strptime(self.end_date, '%Y-%m-%d')
         end_time = datetime.strptime(self.end_time, '%H:%M:%S').time()
+        end_date = datetime.strptime(self.end_date, '%Y-%m-%d')
         end_datetime = datetime.combine(end_date, end_time)
 
         time_difference = relativedelta(current_datetime, end_datetime)
