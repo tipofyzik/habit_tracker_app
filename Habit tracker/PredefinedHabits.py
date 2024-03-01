@@ -21,12 +21,20 @@ def predefine_habits() -> list[Habit]:
 
 
 
-def generate_habit_history(habit: Habit, database: Database) -> None:
+def generate_habit_history(predefined_habit: Habit, database: Database) -> None:
+    """
+    Generates approximate history for a certain habit. Used only to examplify how habit could be defined and developed.
+    
+    Parameters:
+        habit: Habit
+            Predefined habit which history should be generated.
+        database: Database
+            Database into which data about predefined habit will be uploaded."""
     start_datetime = datetime(2024, 1, 17, 12, 4, 36)
     start_time = start_datetime.strftime("%H:%M:%S")
     start_date = start_datetime.strftime("%Y-%m-%d")
-    habit.start_time = start_time
-    habit.start_date = start_date
+    predefined_habit.start_time = start_time
+    predefined_habit.start_date = start_date
 
     def check_off_predefined_habit(habit: Habit) -> None:
         habit.current_streak += 1
@@ -36,26 +44,26 @@ def generate_habit_history(habit: Habit, database: Database) -> None:
     def update_data() -> None:
         end_time = end_datetime.strftime("%H:%M:%S")
         end_date = end_datetime.strftime("%Y-%m-%d")
-        habit.end_time = end_time
-        habit.end_date = end_date
-        check_off_predefined_habit(habit)
-        database.update_habit_characteristic_in_database(habit, ["end_time", "end_date"], 
-                                                         [habit.end_time, habit.end_date])
-        if habit.complete_habit():
-            database.update_habit_characteristic_in_database(habit, ["state"], [habit.state])
-        database.update_habit_characteristic_in_database(habit, ["current_streak", "longest_streak"], 
-                                                         [habit.current_streak, habit.longest_streak])
-        database.update_habit_logs(habit)
+        predefined_habit.end_time = end_time
+        predefined_habit.end_date = end_date
+        check_off_predefined_habit(predefined_habit)
+        database.update_habit_characteristic_in_database(predefined_habit, ["end_time", "end_date"], 
+                                                         [predefined_habit.end_time, predefined_habit.end_date])
+        if predefined_habit.complete_habit():
+            database.update_habit_characteristic_in_database(predefined_habit, ["state"], [predefined_habit.state])
+        database.update_habit_characteristic_in_database(predefined_habit, ["current_streak", "longest_streak"], 
+                                                         [predefined_habit.current_streak, predefined_habit.longest_streak])
+        database.update_habit_logs(predefined_habit)
 
-    for i in range(habit.time_span):
-        if habit.periodicity == "Hour":
+    for i in range(predefined_habit.time_span):
+        if predefined_habit.periodicity == "Hour":
             end_datetime = start_datetime + relativedelta(hours=i, minutes=random.randint(1, 59))
-        elif habit.periodicity == "Day":
+        elif predefined_habit.periodicity == "Day":
             end_datetime = start_datetime + relativedelta(days=i, hours=random.randint(1, 23))
-        elif habit.periodicity == "Week":
+        elif predefined_habit.periodicity == "Week":
             end_datetime = start_datetime + relativedelta(weeks=i, days=random.randint(1, 6))
-        elif habit.periodicity == "Month":
+        elif predefined_habit.periodicity == "Month":
             end_datetime = start_datetime + relativedelta(months=i, days=random.randint(1, 30))
-        elif habit.periodicity == "Year":
+        elif predefined_habit.periodicity == "Year":
             end_datetime = start_datetime + relativedelta(years=i, days=random.randint(1, 364))
         update_data()
