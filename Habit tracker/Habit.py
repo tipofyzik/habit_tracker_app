@@ -138,11 +138,11 @@ class Habit:
         end_datetime = datetime.combine(end_date, end_time)
 
         time_difference = relativedelta(current_datetime, end_datetime)
-        if ((self.periodicity == "Hour" and time_difference.hours > 0)  or 
-            (self.periodicity == "Day" and time_difference.days > 0) or 
-            (self.periodicity == "Week" and time_difference.weeks > 0) or 
-            (self.periodicity == "Month" and time_difference.months > 0) or 
-            (self.periodicity == "Year" and time_difference.years > 0)):
+        if ((self.periodicity == "Hour" and time_difference.hours > 1)  or 
+            (self.periodicity == "Day" and time_difference.days > 1) or 
+            (self.periodicity == "Week" and time_difference.weeks > 1) or 
+            (self.periodicity == "Month" and time_difference.months > 1) or 
+            (self.periodicity == "Year" and time_difference.years > 1)):
             self.current_streak = 0
             print("Time has passed and your current streak has been reset!")
         

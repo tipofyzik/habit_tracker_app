@@ -1,8 +1,10 @@
 from dateutil.relativedelta import relativedelta 
 from datetime import datetime
+import random
+
 from Database import Database
 from Habit import Habit
-import random
+
 
 
 def predefine_habits() -> list[Habit]:
@@ -10,7 +12,7 @@ def predefine_habits() -> list[Habit]:
     Returns 5 predefined habits to demonstrate to the user what it could be.
 
     No parametes."""
-    habit1 = Habit("Brush my teeth", "Day", 7)
+    habit1 = Habit("Brush my teeth", "Day", 21)
     habit2 = Habit("Go to the gym", "Week", 4)
     habit3 = Habit("Go to my therapist", "Month", 6)
     habit4 = Habit("Take medicines", "Hour", 6)
