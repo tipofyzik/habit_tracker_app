@@ -51,7 +51,12 @@ Once you run the appliation, you will see the greeting message and the menu. The
 
 ## Examples of usage
 
+
+
 # 4. Further developing
+My project has cases which can be developed.  
+Firstly, the option of 'upcoming events' can be added. If the user would like to look at the events that they have to accomplish this day/week/month/etc., the program would dispay these events accordingly. This feature would make it more convenient to track one's habits.  
+Secondly,  
 
 # 5. Sources
 [1] https://pypi.org/project/python-dateutil/  
