@@ -1,9 +1,9 @@
+from Database import Database
+from Habit import Habit
+
 from dateutil.relativedelta import relativedelta 
 from datetime import datetime
 import random
-
-from Database import Database
-from Habit import Habit
 
 
 
@@ -36,12 +36,24 @@ def generate_habit_history(predefined_habit: Habit, database: Database) -> None:
     predefined_habit.start_time = start_time
     predefined_habit.start_date = start_date
 
-    def check_off_predefined_habit(habit: Habit) -> None:
-        habit.current_streak += 1
-        if habit.current_streak>habit.longest_streak:
-            habit.longest_streak = habit.current_streak
+    def check_off_predefined_habit(predefined_habit: Habit) -> None:
+        """
+        Updates streaks of a predefined habit.
+        
+        Parameters:
+            habit: Habit
+                Habit to \'check-off\'"""
+        predefined_habit.current_streak += 1
+        if predefined_habit.current_streak>predefined_habit.longest_streak:
+            predefined_habit.longest_streak = predefined_habit.current_streak
 
-    def update_data() -> None:
+    def update_data(predefined_habit: Habit) -> None:
+        """
+        Updates end datetime, state and streaks of a predefined habit. It also updates logs.
+        
+        Parameters:
+            predefined_habit: Habit
+                Habit which data in the database should be updated."""
         end_time = end_datetime.strftime("%H:%M:%S")
         end_date = end_datetime.strftime("%Y-%m-%d")
         predefined_habit.end_time = end_time
@@ -66,4 +78,4 @@ def generate_habit_history(predefined_habit: Habit, database: Database) -> None:
             end_datetime = start_datetime + relativedelta(months=i, days=random.randint(1, 30))
         elif predefined_habit.periodicity == "Year":
             end_datetime = start_datetime + relativedelta(years=i, days=random.randint(1, 364))
-        update_data()
+        update_data(predefined_habit)

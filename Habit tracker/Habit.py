@@ -111,7 +111,7 @@ class Habit:
 
     def check_off_habit(self) -> None:
         """
-        Updates streaks of a habit"""
+        Updates streaks of a habit."""
         if self.end_time is not None and self.end_date is not None:
             self.check_time_difference()
 

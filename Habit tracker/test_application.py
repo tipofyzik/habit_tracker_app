@@ -8,7 +8,7 @@ import unittest
 This module test critical points in Habit tracking application, namely,
 Habit, Database and DatabaseAnalyzer classes. 
 
-The CommandLineInterface class is based on this three classes."""
+The CommandLineInterface class is based on this three classes, so it doesn't tested here."""
 
 
 
