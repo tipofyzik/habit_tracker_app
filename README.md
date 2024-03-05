@@ -56,6 +56,10 @@ My project has 2 possible databases: "AppDatabase.db" and "TestDatabase.db". The
 
 The "PredefinedHabits.py" module contains the functions that create habit objects and their history (an example how these habits could be developed). This is important to note that history varies a little bit each time you upload predefined_habits. This is because history creation contains random functions to make it more 'live' (like people don't always follow the shedule and make somth earlier or later a little bit).  
 
+Here, I show when the application counts habit completion as 'successful' and when not.  
+*image*
+
+
 # 4. Further developing
 My project has cases which can be further developed.  
 1. The option of 'upcoming events' can be added. If the user would like to look at the events that they have to accomplish this day/week/month/etc., the program would dispay these events accordingly. This feature would make it more convenient to track one's habits.
