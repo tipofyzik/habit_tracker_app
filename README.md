@@ -49,12 +49,19 @@ Once you run the appliation, you will see the greeting message and the menu. The
 
 
 
-# 3. Further developing
+# 3. Implementation specifics
+You can note that my project on github doesn't contain any database files for the application to work. This is because it will be created once you run the program.  
+
+My project has 2 possible databases: "AppDatabase.db" and "TestDatabase.db". The first one creates once you run "HabitTrackingApp.py" file and the other one creates when you run "test_application.py" file. These databases don't affect each other and serve for the application to work and to test the application, respectively.  
+
+The "PredefinedHabits.py" module contains the functions that create habit objects and their history (an example how these habits could be developed). This is important to note that history varies a little bit each time you upload predefined_habits. This is because history creation contains random functions to make it more 'live' (like people don't always follow the shedule and make somth earlier or later a little bit).  
+
+# 4. Further developing
 My project has cases which can be further developed.  
 1. The option of 'upcoming events' can be added. If the user would like to look at the events that they have to accomplish this day/week/month/etc., the program would dispay these events accordingly. This feature would make it more convenient to track one's habits.
 2. 
 
-# 4. Sources
+# 5. Sources
 [1] https://pypi.org/project/python-dateutil/  
 [2] https://pypi.org/project/tabulate/  
 [3] https://questionary.readthedocs.io/en/stable/  
