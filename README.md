@@ -70,7 +70,8 @@ Let's assume again that the habit has started on the 2nd of January and performe
 # 4. Further developing
 My project has cases which can be further developed.  
 1. The option of 'upcoming events' can be added. If the user would like to look at the events that they have to accomplish this day/week/month/etc., the program would dispay these events accordingly. This feature would make it more convenient to track one's habits.
-2. The rule, according to whic streaks reset, could be developed more properly. Namely, streaks should be reset once the period is gone. For example, we have a habit which should be accomplished annually. In my implementation the year considers between two dates (e.g., 11.02.24 and 11.02.25). But it would be better to connect it to the calendar. In other words, the application should consider 'year' (or ither periods) according to the calendar (this year is between 11.02.24 and 31.12.2024). This would make the habit tracker app more accurate. 
+2. The rule, according to which streaks reset, can be developed more properly. Namely, streaks should be reset once the period is gone. For example, we have a habit which should be accomplished annually. In my implementation the year considers between two dates (e.g., 11.02.24 and 11.02.25). But it would be better to connect it to the calendar. In other words, the application should consider 'year' (or ither periods) according to the calendar (this year is between 11.02.24 and 31.12.2024). This would make the habit tracker app more accurate.
+3. The GUI cn be added.
 
 # 5. Sources
 [1] https://pypi.org/project/python-dateutil/  
