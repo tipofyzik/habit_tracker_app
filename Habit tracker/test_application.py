@@ -92,7 +92,7 @@ class TestDatabaseAndDatabaseAnalyzer(unittest.TestCase):
         
         Assertions:
         - Assert that the habit's attribute values match the extracted information."""
-        habit_obj = Habit('name', 'periodicity', 0)
+        habit_obj = Habit('name', 'day', 0)
         self.database.insert_habit_to_database(habit_obj)
 
         habit_info = list(vars(habit_obj).values())
@@ -112,7 +112,7 @@ class TestDatabaseAndDatabaseAnalyzer(unittest.TestCase):
         
         Assertions:
         - Assert that the habit's updated characteristic match the value from database."""
-        habit_obj = Habit('name', 'periodicity', 0)
+        habit_obj = Habit('name', 'day', 0)
         self.database.insert_habit_to_database(habit_obj)
         habit_obj.update_habit_characteristic('periodicity', 'week')
         self.database.update_habit_characteristic_in_database(habit_obj, ['periodicity'], ['week'])
@@ -134,7 +134,7 @@ class TestDatabaseAndDatabaseAnalyzer(unittest.TestCase):
 
         Assertions:
         - Assert that the result of habit extraction from database is None."""
-        habit_obj = Habit('name', 'periodicity', 0)
+        habit_obj = Habit('name', 'day', 0)
         self.database.insert_habit_to_database(habit_obj)
         self.database.delete_habit_from_database(habit_obj.name)
 
