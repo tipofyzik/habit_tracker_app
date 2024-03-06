@@ -30,7 +30,7 @@ class Habit:
             Duration for which the user wants to develop the habit. Combining with periodicity we 
             set, for example, 2 days or 5 weeks. 
         state: str, optimal
-            The state of a habit, namely, \'In progress\'/\'Completed\'/\'Dropped\'.
+            The state of a habit, namely, \'In progress\'/\'Completed\'.
             Defaults to \'In progress\'.
         current_streak: int, optimal
             The current streak represents a number of successful, consequtive habit executions.

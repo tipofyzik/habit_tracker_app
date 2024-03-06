@@ -79,3 +79,4 @@ def generate_habit_history(predefined_habit: Habit, database: Database) -> None:
         elif predefined_habit.periodicity == "Year":
             end_datetime = start_datetime + relativedelta(years=i, days=random.randint(1, 364))
         update_data(predefined_habit)
+        
