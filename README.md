@@ -54,20 +54,23 @@ You can note that my project on github doesn't contain any database files for th
 
 My project has 2 possible databases: "AppDatabase.db" and "TestDatabase.db". The first one creates once you run "HabitTrackingApp.py" file and the other one creates when you run "test_application.py" file. These databases don't affect each other and serve for the application to work and to test the application, respectively.  
 
-The "PredefinedHabits.py" module contains the functions that create habit objects and their history (an example how these habits could be developed). This is important to note that history varies a little bit each time you upload predefined_habits. This is because history creation contains random functions to make it more 'live' (like people don't always follow the shedule and make somth earlier or later a little bit).  
+The "PredefinedHabits.py" module contains the functions that create habit objects and their history (an example how these habits could be developed). This is important to note that history varies a little bit each time you upload predefined_habits. This is because history creation contains random functions to make it more 'live' (like people don't always follow the shedule and make something earlier or later a little bit).  
 
 **Here, I explain when the application counts habit completion as 'successful' and when not**.  
 Let's say the user defines their daily habit on the 2nd of January (red cell). Suppose the user wants to develop this habit for a week and begins to accomplish it on the 4th of January. If the user succesfully completes (green cell) the habit  completes the habit every day for the entire week, without any breaks, we say the habit to be developed and the user has achived their goal (image below). With each consecutive successful completion of the habit the streak counter increases, e.g., if there are 5 consecutive completions, habit streak would be 5.  
 ![image](https://github.com/tipofyzik/habit_tracker_app/assets/84290230/a89270d9-91c4-47d2-8b59-8c617b78cbdc)  
 
 However, if we the user skips a habit for one day (yellow cell) the streak is reset to zero. This process will repeat until the user accomplishes habit for the required duration. In our example, the user should perform the habit for 7 consecutive days (image below). Once the user develop the habit we say that the habit is 'completed'.    
-![image](https://github.com/tipofyzik/habit_tracker_app/assets/84290230/ea74a920-e354-48c6-9522-2a88b85d2f10)
+![image](https://github.com/tipofyzik/habit_tracker_app/assets/84290230/ea74a920-e354-48c6-9522-2a88b85d2f10)  
+
+Summing up, the streak is reset when the user doesn't accomplish habit during required period. In our example, the habit is daily. My application analyze it according to the following rule:  
+Let's assume again that the habit has started on the 2nd of January and performed it in the first time on this day at 11:57:24 (24-hour clock), i.e., the streak is 1. The streak will be reset to zero if the difference between two consecutive completions more than or uqual to 2 days. The reason is simple: if the user accomplishes the habit on one day ,they usually wait for the next day and only then they accomplish their habit during this 'next day'. Returning to our example, the user can successfully accomplish their habit until the 4th of January, 11:57:23. Once the time exceeds this point, the streak is reset to zero. **This is similar to other periods, such as hour, week, etc.**  
 
 
 # 4. Further developing
 My project has cases which can be further developed.  
 1. The option of 'upcoming events' can be added. If the user would like to look at the events that they have to accomplish this day/week/month/etc., the program would dispay these events accordingly. This feature would make it more convenient to track one's habits.
-2. 
+2. The rule, according to whic streaks reset, could be developed more properly. Namely, streaks should be reset once the period is gone. For example, we have a habit which should be accomplished annually. In my implementation the year considers between two dates (e.g., 11.02.24 and 11.02.25). But it would be better to connect it to the calendar. In other words, the application should consider 'year' (or ither periods) according to the calendar (this year is between 11.02.24 and 31.12.2024). This would make the habit tracker app more accurate. 
 
 # 5. Sources
 [1] https://pypi.org/project/python-dateutil/  
