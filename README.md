@@ -57,7 +57,12 @@ My project has 2 possible databases: "AppDatabase.db" and "TestDatabase.db". The
 The "PredefinedHabits.py" module contains the functions that create habit objects and their history (an example how these habits could be developed). This is important to note that history varies a little bit each time you upload predefined_habits. This is because history creation contains random functions to make it more 'live' (like people don't always follow the shedule and make somth earlier or later a little bit).  
 
 Here, I show when the application counts habit completion as 'successful' and when not.  
-*image*
+
+Let's say that the user defines his daily habit on the 2nd of January (red cell). We know that the user wants to develop this habit for a week and he/she starts to accomplish it since the 4th of January. If the user succesfully completes (green cell) the habit during the whole week, i.e., without any pauses, we say that the habit is developed and the user achived one's goal (image below). After each successful consecutive habit completion the counter of successful streaks will be increased, i.e., if we have 5 consecutive completions, habit streak equals 5.  
+![image](https://github.com/tipofyzik/habit_tracker_app/assets/84290230/a89270d9-91c4-47d2-8b59-8c617b78cbdc)  
+
+However, if we the user skips a habit for one day (yellow cell) the streak is reset to zero. This process will repeat until the user accomplishes habit for the required duration. In our example, the user should perform the habit for 7 consecutive days (image below).   
+![image](https://github.com/tipofyzik/habit_tracker_app/assets/84290230/ada7eaf4-a19c-47db-8228-776c6f878c9b)
 
 
 # 4. Further developing
