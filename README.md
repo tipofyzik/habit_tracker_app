@@ -62,7 +62,7 @@ Let's say that the user defines his daily habit on the 2nd of January (red cell)
 ![image](https://github.com/tipofyzik/habit_tracker_app/assets/84290230/a89270d9-91c4-47d2-8b59-8c617b78cbdc)  
 
 However, if we the user skips a habit for one day (yellow cell) the streak is reset to zero. This process will repeat until the user accomplishes habit for the required duration. In our example, the user should perform the habit for 7 consecutive days (image below).   
-![image](https://github.com/tipofyzik/habit_tracker_app/assets/84290230/ada7eaf4-a19c-47db-8228-776c6f878c9b)
+![image](https://github.com/tipofyzik/habit_tracker_app/assets/84290230/ea74a920-e354-48c6-9522-2a88b85d2f10)
 
 
 # 4. Further developing
