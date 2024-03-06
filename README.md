@@ -6,11 +6,11 @@
 You need to intall Python with the version 3.11.3 and higher.
 All required modules to install you can find in the file **"requirements.txt"**.
 ## How to install
-1. Install Python from the [official site](https://www.python.org/downloads/)[1].  
+1. Install Python from the [official site](https://www.python.org/downloads/) [1].  
 2. Install required modules (follow the links):  
-   2.1 [**python-dateutil**](https://pypi.org/project/python-dateutil/)[2] - necessary for logging data.  
-   2.2 [**tabulate**](https://pypi.org/project/tabulate/)[3] - necessary for displaying data.  
-   2.3 [**questionary**](https://questionary.readthedocs.io/en/stable/)[4] - necessary for convenient user interaction.  
+   2.1 [**python-dateutil**](https://pypi.org/project/python-dateutil/) [2] - necessary for logging data.  
+   2.2 [**tabulate**](https://pypi.org/project/tabulate/) [3] - necessary for displaying data.  
+   2.3 [**questionary**](https://questionary.readthedocs.io/en/stable/) [4] - necessary for convenient user interaction.  
 3. Download the folder "Habit tracker". It contains **"HabitTrackingApp.py"** file that runs the application.  
 
 
