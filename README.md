@@ -66,7 +66,7 @@ However, if we the user skips a habit for one day (yellow cell) the streak is re
 ![image](https://github.com/tipofyzik/habit_tracker_app/assets/84290230/ea74a920-e354-48c6-9522-2a88b85d2f10)  
 
 Summing up, the streak is reset when the user doesn't accomplish habit during required period. In our example, the habit is daily. My application analyze it according to the following rule:  
-Let's assume again that the habit has started on the 2nd of January and performed it in the first time on this day at 11:57:24 (24-hour clock), i.e., the streak is 1. The streak will be reset to zero if the the time of a next check-off later than thhe 3rd of January, 23:59:59. This is importantn to note that even if the user exceeds alloted time the streak would be equal to 1. This is because every time when the user checks-off the habit the streak increases by 1. So, firstly, streak resets and then 1 is added to it.  
+Let's assume again that the habit has started on the 2nd of January and performed it in the first time on this day at 11:57:24 (24-hour clock), i.e., the streak is 1. The streak will be reset to zero if the the time of a next check-off later than thhe 3rd of January, 23:59:59. This is important to note that even if the user exceeds alloted time the streak would be equal to 1. This is because every time when the user checks-off the habit the streak increases by 1. So, firstly, streak resets and then 1 is added to it.  
 **This is similar to other periods, such as hour, week, etc.**  
 
 
