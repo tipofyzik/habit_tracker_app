@@ -64,15 +64,14 @@ However, if we the user skips a habit for one day (yellow cell) the streak is re
 ![image](https://github.com/tipofyzik/habit_tracker_app/assets/84290230/ea74a920-e354-48c6-9522-2a88b85d2f10)  
 
 Summing up, the streak is reset when the user doesn't accomplish habit during required period. In our example, the habit is daily. My application analyze it according to the following rule:  
-Let's assume again that the habit has started on the 2nd of January and performed it in the first time on this day at 11:57:24 (24-hour clock), i.e., the streak is 1. The streak will be reset to zero if the the time of a next check-off later than thhe 3rd of January, 23:59:59. This is importantn to note that even if the user exceeds alloted time the streak would be equal to 1. This is because every time when the usr checks-off the habit the streak increases by 1. So, firstly, streak resets and then 1 is added to it.  
+Let's assume again that the habit has started on the 2nd of January and performed it in the first time on this day at 11:57:24 (24-hour clock), i.e., the streak is 1. The streak will be reset to zero if the the time of a next check-off later than thhe 3rd of January, 23:59:59. This is importantn to note that even if the user exceeds alloted time the streak would be equal to 1. This is because every time when the user checks-off the habit the streak increases by 1. So, firstly, streak resets and then 1 is added to it.  
 **This is similar to other periods, such as hour, week, etc.**  
 
 
 # 4. Further developing
 My project has cases which can be further developed:  
-1. The option of 'upcoming events' can be added. If the user would like to look at the events that they have to accomplish this day/week/month/etc., the program would dispay these events accordingly. This feature would make it more convenient to track one's habits.
-2. The algorithm according to which streaks could be reset can be improved. Namely, for each period the algorithms check only the difference between its units and the conditions should be extended. E.g., assume we have a habit with the periodicity 'Hour', menaing that the user should accomplish this habit hourly. The application only check hour-difference between the last time when the habit has bees checked off and the current time. But this difference isn't expressed in absolute numbers that can lead to the following issue: Let's say we have two point 21.01.2024, 10:15:50 and 23.01.2024, 10:30:20. When the application check the hour-difference between them it says that the difference is 0, because both dates have 10 o'clock. To implement this properly we should calculate the absolute hour-difference between two dates, i.e., 48 hours.  
-3. The GUI can be added.
+1. The option of 'upcoming events' can be added. If the user would like to look at the events that they have to accomplish this day/week/month/etc., the program would dispay these events accordingly. This feature would make it more convenient to track one's habits.  
+2. The GUI can be added.
 
 # 5. Sources
 [1] https://www.python.org/  
