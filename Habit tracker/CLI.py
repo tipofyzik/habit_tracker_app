@@ -113,7 +113,10 @@ class CommandLineInterface:
 
         No parameters."""
         name = q.text("Write name for your habit. " + 
-                      "\nRemember, you won't change it later: ").ask()
+                    "\nRemember, you won't change it later: ").ask()
+        while not name.strip():
+            name = q.text("Write name for your habit. " + 
+                        "\nRemember, you won't change it later: ").ask()
         
         periodicity = q.select(
             "Choose a periodicity for your habit, i.e., how often you will perform your habit?",
