@@ -29,12 +29,13 @@ My project also contains 3 files more: PredefinedHabits.py, HabitTrackingApp.py,
 # 2. How to use
 To run the application you should accomplish the following steps:
 1. Download the folder "Habit tracker" and put it wherever you want. Don't forget to install required libraries!
-2. Open the command-line interface and specify the path to directory where "HabitTrackingApp.py" file is located. Do so by writing:
-**cd Your/path/to/file**
+2. Open the command-line interface and specify the path to directory where "HabitTrackingApp.py" file is located. Do so by writing:  
+**cd Your/path/to/file**  
 Example: cd C:\Users\user\Downloads\Habit tracker
-3. Now, write the following to run the application:
+3. Now, write the following to run the application:  
 **python HabitTrackingApp.py**
-
+_**Note:**_ To run tests for the project perform step 2 and then write:
+**python test_application.py**
 
 Once you run the appliation, you will see the greeting message and the menu. The menu contains 6 options:  
 **·** Add, update, or delete habit - suggest you to create new and update/delete existing habit  
