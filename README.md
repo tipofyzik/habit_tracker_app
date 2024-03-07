@@ -49,9 +49,6 @@ Once you run the appliation, you will see the greeting message and the menu. The
 
 ## Examples of usage
 This video shows how you can add, update and delete habit. Here, I create new habit, show that it's tracked with the help of analitics module, change habit characteristics and show that they have been changed.  
-
-
-
 https://github.com/tipofyzik/habit_tracker_app/assets/84290230/c09418b7-7b2c-4702-b1b4-9fcd9115c8c8.mp4
 
 
