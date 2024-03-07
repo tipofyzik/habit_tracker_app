@@ -33,7 +33,8 @@ To run the application you should accomplish the following steps:
 **cd Your/path/to/file**  
 Example: cd C:\Users\user\Downloads\Habit tracker
 3. Now, write the following to run the application:  
-**python HabitTrackingApp.py**
+**python HabitTrackingApp.py**  
+
 _**Note:**_ To run tests for the project perform step 2 and then write:
 **python test_application.py**
 
