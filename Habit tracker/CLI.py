@@ -256,7 +256,7 @@ class CommandLineInterface:
             "Show me all currently tracked habits": self.show_currently_tracked_habits,
             "Show me all already developed habits": self.show_all_developed_habits,
             "Show me all habits with the same periodicity": self.show_habits_with_the_same_periodicity,
-            "Show me the longest streak among currently tracked habits": self.show_longest_streak_of_all_habits,
+            "Show me the longest streak among all defined habits": self.show_longest_streak_of_all_habits,
             "Show me the longest streak of a certain habit": self.show_longest_streaks_of_given_habit,
             "Show the whole information of a certain habit": self.show_detailed_info,
             "Return back" : self.back_to_start_menu
@@ -268,7 +268,7 @@ class CommandLineInterface:
                 "Show me all currently tracked habits",
                 "Show me all already developed habits",
                 "Show me all habits with the same periodicity",
-                "Show me the longest streak among currently tracked habits",
+                "Show me the longest streak among all defined habits",
                 "Show me the longest streak of a certain habit",
                 "Show the whole information of a certain habit",
                 "Return back"

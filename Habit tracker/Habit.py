@@ -117,50 +117,20 @@ class Habit:
         
         No parameters."""
         if self.end_time is not None and self.end_date is not None:
-            self.check_time_difference()
+            self.check_time_excess()
 
         self.current_streak += 1
         if self.current_streak>self.longest_streak:
             self.longest_streak = self.current_streak
         self.end_time, self.end_date = return_current_date_and_time() 
 
-    def check_time_exceed(self, periodicity: str, 
-                          end_datetime: datetime, current_datetime: datetime) -> int:
-        """
-        Checks wheter the difference between the last check-off and the current datetime exceeds a given period.
-        
-        Parameters:
-            periodicity: str
-                Periodicity give to a habit.
-            end_datetime: datetime
-                Date and time of the last habit check off.
-            current_datetime: datetime
-                Current date and time."""
-        time_difference = [end_datetime.hour - current_datetime.hour,
-                           end_datetime.day - current_datetime.day,
-                           end_datetime.isocalendar().week - current_datetime.isocalendar().week,
-                           end_datetime.month - current_datetime.month,
-                           end_datetime.year - current_datetime.year]
-        
-        exceed_time = False
-        range_codes = {
-            "Hour": 5,
-            "Day": 4,
-            "Week": 3,
-            "Month": 2,
-            "Year": 1
-        }
-        for i in range(range_codes[periodicity]):
-            if abs(time_difference[-i-1])>1:
-                exceed_time = True
-        return exceed_time
-
-    def check_time_difference(self) -> None:
+    def check_time_excess(self) -> None:
         """
         Checks whether the user exceeded time to complete a habit within a specific period.
-        Habit is broken if the time difference between current time and the time of last check
-        greater than or equal to 1 periodicity. 
-        E.g.: periodicity 1 week, if the user check his habit off after full 7 days (1 week), habit streak is failed
+        Habit is broken if the time difference between current time and the time of the last check
+        greater than 1 periodicity. 
+        E.g.: Periodicity is \'Week\'. Assume the user start the habit \'this\' week. If the user don't check it off
+        until the end of the \'next\' week, the habit's currenet streak would be reset.
 
         No parameters."""
         current_time, current_date = return_current_date_and_time()
@@ -172,8 +142,24 @@ class Habit:
         end_date = datetime.strptime(self.end_date, '%Y-%m-%d')
         end_datetime = datetime.combine(end_date, end_time)
 
-        exceed_time = self.check_time_exceed(self.periodicity, end_datetime, current_datetime)
-        if exceed_time:
+        time_difference = [end_datetime.hour - current_datetime.hour,
+                           end_datetime.day - current_datetime.day,
+                           end_datetime.isocalendar().week - current_datetime.isocalendar().week,
+                           end_datetime.month - current_datetime.month,
+                           end_datetime.year - current_datetime.year]     
+        time_excess = False
+        range_codes = {
+            "Hour": 5,
+            "Day": 4,
+            "Week": 3,
+            "Month": 2,
+            "Year": 1
+        }
+        for i in range(range_codes[self.periodicity]):
+            if abs(time_difference[-i-1])>1:
+                time_excess = True
+
+        if time_excess:
             self.current_streak = 0
             print("Time has passed and your current streak has been reset!")
         
