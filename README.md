@@ -6,7 +6,7 @@
 You need to intall Python with the version 3.11.3 and higher.
 All required modules to install you can find in the file **"requirements.txt"**.
 ## How to install
-1. Install Python from the [official site](https://www.python.org/downloads/).  
+1. Download Python from the [official site](https://www.python.org/downloads/) and install it.  
 2. Install required modules (follow the links):  
    2.1 [**python-dateutil**](https://pypi.org/project/python-dateutil/) - necessary for logging data.  
    2.2 [**tabulate**](https://pypi.org/project/tabulate/) - necessary for displaying data.  
