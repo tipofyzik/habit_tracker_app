@@ -2,6 +2,9 @@ from Habit import Habit
 from Database import Database
 from DatabaseAnalyzer import DatabaseAnalyzer
 
+from dateutil.relativedelta import relativedelta 
+from datetime import datetime
+
 import unittest
 
 """
@@ -21,7 +24,7 @@ class TestHabitClass(unittest.TestCase):
         
         Assertioons:
         - Assert that created instance is an instance oh the Habit class."""
-        habit_obj = Habit('name', 'day', 0)
+        habit_obj = Habit('name', 'Day', 0)
         self.assertIsInstance(habit_obj, Habit)
 
     def test_habit_update(self) -> None:
@@ -31,37 +34,55 @@ class TestHabitClass(unittest.TestCase):
         
         Assertioons:
         - Assert that updated characteristic is equal to new value."""
-        habit_obj = Habit('name', 'day', 0)
+        habit_obj = Habit('name', 'Day', 0)
         characteristic = 'periodicity'
-        new_value = 'week'
+        new_value = 'Week'
         habit_obj.update_habit_characteristic(characteristic, new_value)
         self.assertEqual(habit_obj.periodicity, new_value)
 
     def test_habit_check_off(self) -> None:
         """
-        Creates a habit instance, checks it off and 
+        Creates a habit instance, checks it off several times and 
         compares habit's streaks with the updated one.
         
         Assertioons:
         - Assert that updated habit's streaks are equal to new values."""
-        habit_obj = Habit('name', 'day', 0)
+        habit_obj = Habit('name', 'Day', 7)
         current_streak, longest_streak = habit_obj.current_streak, habit_obj.longest_streak
-        habit_obj.check_off_habit()
-        current_streak += 1
-        longest_streak += 1
+        for _ in range(habit_obj.time_span-2):
+            habit_obj.check_off_habit()
+            current_streak += 1
+            longest_streak += 1
         self.assertEqual(current_streak, habit_obj.current_streak)
         self.assertEqual(longest_streak, habit_obj.longest_streak)
 
     def test_habit_completion(self) -> None:
         """
-        Creates a habit instance, 'completes' it and asserts whether 
+        Creates a habit instance, 'develops' it and asserts whether 
         the state of the habit is equal to \'Completed\'.
         
         Assertioons:
         - Assert that completed habit have \'Completed\' state."""
-        habit_obj = Habit('name', 'day', 0)
+        habit_obj = Habit('name', 'Day', 5)
+        for _ in range(habit_obj.time_span):
+            habit_obj.check_off_habit()
         habit_obj.complete_habit()
         self.assertEqual(habit_obj.state, "Completed")
+
+    def test_streak_reset_to_zero(self) -> None:
+        """
+        Creates a habit instance, checks it off several times, changes habit end time 
+        and then checks habit again. The streak should be reset to zero, because the allotted time for 
+        performing the habit has been exceeded. After reseting, the program adds 1 to streak, because the habit 
+        has been checked off. Function asserts that the current streak is equal to 1."""
+        habit_obj = Habit('name', 'Day', 9)
+        for _ in range(habit_obj.time_span-2):
+            habit_obj.check_off_habit()
+        end_date = datetime.strptime(habit_obj.end_date, '%Y-%m-%d')
+        end_date = end_date - relativedelta(days=3)
+        habit_obj.end_date = end_date.strftime('%Y-%m-%d')
+        habit_obj.check_off_habit()
+        self.assertEqual(habit_obj.current_streak, 1)
 
 
 
@@ -92,7 +113,7 @@ class TestDatabaseAndDatabaseAnalyzer(unittest.TestCase):
         
         Assertions:
         - Assert that the habit's attribute values match the extracted information."""
-        habit_obj = Habit('name', 'day', 0)
+        habit_obj = Habit('name', 'Day', 0)
         self.database.insert_habit_to_database(habit_obj)
 
         habit_info = list(vars(habit_obj).values())
@@ -112,10 +133,10 @@ class TestDatabaseAndDatabaseAnalyzer(unittest.TestCase):
         
         Assertions:
         - Assert that the habit's updated characteristic match the value from database."""
-        habit_obj = Habit('name', 'day', 0)
+        habit_obj = Habit('name', 'Day', 0)
         self.database.insert_habit_to_database(habit_obj)
-        habit_obj.update_habit_characteristic('periodicity', 'week')
-        self.database.update_habit_characteristic_in_database(habit_obj, ['periodicity'], ['week'])
+        habit_obj.update_habit_characteristic('periodicity', 'Week')
+        self.database.update_habit_characteristic_in_database(habit_obj, ['periodicity'], ['Week'])
 
         retrived_habit_info = self.analyzer.return_detailed_information_about_habit(habit_obj.name)[1]
         retrieved_habit = Habit(*retrived_habit_info)
@@ -134,22 +155,20 @@ class TestDatabaseAndDatabaseAnalyzer(unittest.TestCase):
 
         Assertions:
         - Assert that the result of habit extraction from database is None."""
-        habit_obj = Habit('name', 'day', 0)
+        habit_obj = Habit('name', 'Day', 0)
         self.database.insert_habit_to_database(habit_obj)
         self.database.delete_habit_from_database(habit_obj.name)
 
         retrived_habit_info = self.analyzer.return_detailed_information_about_habit(habit_obj.name)[1]
         self.assertIsNone(retrived_habit_info)
 
-        # Delete data not to raise error in the next tests
-
     def test_returning_streaks(self) -> None:
         """
         Test functions that are responsible for returning longest streak
         among all habits and the longest streak of a give, respectively."""
-        habit_obj1 = Habit('name1', 'day', 0)
+        habit_obj1 = Habit('name1', 'Day', 0)
         habit_obj1.check_off_habit()
-        habit_obj2 = Habit('name2', 'week', 0)
+        habit_obj2 = Habit('name2', 'Week', 0)
         self.database.insert_habit_to_database(habit_obj1)
         self.database.insert_habit_to_database(habit_obj2)
 
@@ -173,8 +192,8 @@ class TestDatabaseAndDatabaseAnalyzer(unittest.TestCase):
                 self.assertEqual(value1, value2)
 
         # Return habits all tracked habits
-        habit_obj1 = Habit('name1', 'day', 0)
-        habit_obj2 = Habit('name2', 'week', 0)
+        habit_obj1 = Habit('name1', 'Day', 0)
+        habit_obj2 = Habit('name2', 'Week', 0)
         self.database.insert_habit_to_database(habit_obj1)
         self.database.insert_habit_to_database(habit_obj2)
 
@@ -186,12 +205,12 @@ class TestDatabaseAndDatabaseAnalyzer(unittest.TestCase):
         self.database.delete_habit_from_database(habit_obj2.name)
 
         # Return habits with the same periodicity
-        habit_obj1 = Habit('name1', 'day', 0)
-        habit_obj2 = Habit('name2', 'day', 0)
+        habit_obj1 = Habit('name1', 'Day', 0)
+        habit_obj2 = Habit('name2', 'Day', 0)
         self.database.insert_habit_to_database(habit_obj1)
         self.database.insert_habit_to_database(habit_obj2)
 
-        habits_with_the_same_periodicity = self.analyzer.return_habits_with_the_same_periodicity('day')
+        habits_with_the_same_periodicity = self.analyzer.return_habits_with_the_same_periodicity('Day')
         habits = [Habit(*habit) for habit in habits_with_the_same_periodicity]
         compare_class_objects(habit_obj1, habits[0])
         compare_class_objects(habit_obj2, habits[1])
@@ -199,6 +218,8 @@ class TestDatabaseAndDatabaseAnalyzer(unittest.TestCase):
         # Delete data not to raise error in the next tests
         self.database.delete_habit_from_database(habit_obj1.name)
         self.database.delete_habit_from_database(habit_obj2.name)
+
+
 
 
 

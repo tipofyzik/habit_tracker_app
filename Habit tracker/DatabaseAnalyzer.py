@@ -131,7 +131,8 @@ class DatabaseAnalyzer:
                        habits_log.end_date AS 'End date'
                        FROM habits_log
                        WHERE habits_log.name = ?
-                       LIMIT {rows_amount} OFFSET 1""", (habit_name,))
+                       ORDER BY habits_log.end_date DESC, habits_log.end_time DESC
+                       LIMIT {rows_amount} OFFSET 0""", (habit_name,))
         history = cursor.fetchall()
         history = list(history)
         cursor.close()

@@ -219,7 +219,6 @@ class CommandLineInterface:
             habit = self.habit_container[name]
             details = [habit.name, habit.periodicity, habit.time_span, habit.start_time, habit.start_date]
             columns =  ("Name", "Periodicity", "Time span", "Start time", "Start date")
-            print(details, columns)
             print(tabulate([details], headers = columns, tablefmt="github"), '\n')
 
             history = self.analyzer.return_habit_history(name)

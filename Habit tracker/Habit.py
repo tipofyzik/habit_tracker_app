@@ -109,9 +109,13 @@ class Habit:
         else: 
             print(f"Characteristic {characteristic_name} doesn't exist. Try again.")
 
+
+
     def check_off_habit(self) -> None:
         """
-        Updates streaks of a habit."""
+        Updates streaks of a habit.
+        
+        No parameters."""
         if self.end_time is not None and self.end_date is not None:
             self.check_time_difference()
 
@@ -119,6 +123,37 @@ class Habit:
         if self.current_streak>self.longest_streak:
             self.longest_streak = self.current_streak
         self.end_time, self.end_date = return_current_date_and_time() 
+
+    def check_time_exceed(self, periodicity: str, 
+                          end_datetime: datetime, current_datetime: datetime) -> int:
+        """
+        Checks wheter the difference between the last check-off and the current datetime exceeds a given period.
+        
+        Parameters:
+            periodicity: str
+                Periodicity give to a habit.
+            end_datetime: datetime
+                Date and time of the last habit check off.
+            current_datetime: datetime
+                Current date and time."""
+        time_difference = [end_datetime.hour - current_datetime.hour,
+                           end_datetime.day - current_datetime.day,
+                           end_datetime.isocalendar().week - current_datetime.isocalendar().week,
+                           end_datetime.month - current_datetime.month,
+                           end_datetime.year - current_datetime.year]
+        
+        exceed_time = False
+        range_codes = {
+            "Hour": 5,
+            "Day": 4,
+            "Week": 3,
+            "Month": 2,
+            "Year": 1
+        }
+        for i in range(range_codes[periodicity]):
+            if abs(time_difference[-i-1])>1:
+                exceed_time = True
+        return exceed_time
 
     def check_time_difference(self) -> None:
         """
@@ -137,15 +172,13 @@ class Habit:
         end_date = datetime.strptime(self.end_date, '%Y-%m-%d')
         end_datetime = datetime.combine(end_date, end_time)
 
-        time_difference = relativedelta(current_datetime, end_datetime)
-        if ((self.periodicity == "Hour" and time_difference.hours > 1)  or 
-            (self.periodicity == "Day" and time_difference.days > 1) or 
-            (self.periodicity == "Week" and time_difference.weeks > 1) or 
-            (self.periodicity == "Month" and time_difference.months > 1) or 
-            (self.periodicity == "Year" and time_difference.years > 1)):
+        exceed_time = self.check_time_exceed(self.periodicity, end_datetime, current_datetime)
+        if exceed_time:
             self.current_streak = 0
             print("Time has passed and your current streak has been reset!")
         
+
+
     def complete_habit(self) -> bool:
         """
         If during the entire period the habit developed without interruption, it is considered \'Сompleted\'
