@@ -60,6 +60,8 @@ https://github.com/tipofyzik/habit_tracker_app/assets/84290230/d9635d9f-15f9-482
 
 The following demonstrates how analytics section works (each function).  
 
+The last video shows additional options section. Here, you can upload predefined habits (read more about it below), delete them, and delete all defined habits (tracked and developed).  
+
 
 # 3. Implementation specifics
 You can note that my project on github doesn't contain any database files for the application to work. This is because it will be created once you run the program.  
