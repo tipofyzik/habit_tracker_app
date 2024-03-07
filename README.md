@@ -58,7 +58,7 @@ Here, I show the example how the habit can be checked-off and completed. You can
 
 https://github.com/tipofyzik/habit_tracker_app/assets/84290230/d9635d9f-15f9-4825-97f6-c0d395d482e0.mp4
 
-This video demonstrates how analytics section works (each function).  
+The following demonstrates how analytics section works (each function).  
 
 
 # 3. Implementation specifics
