@@ -475,7 +475,7 @@ class CommandLineInterface:
     # Exiting the application
     def quit_program(self) -> None:
         """
-        Terminates program is the user confirmed so.
+        Quits the program is the user confirmed so.
 
         No parameters."""
         def perform_action():
