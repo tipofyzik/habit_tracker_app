@@ -11,7 +11,7 @@ import unittest
 This module test critical points in Habit tracking application, namely,
 Habit, Database and DatabaseAnalyzer classes. 
 
-The CommandLineInterface class is based on this three classes, so it doesn't tested here."""
+The CommandLineInterface class is based on these three classes, so it isn't tested here."""
 
 
 
@@ -71,7 +71,7 @@ class TestHabitClass(unittest.TestCase):
 
     def test_streak_reset(self) -> None:
         """
-        Creates a habit instance, checks it off several times, changes habit end time 
+        Creates a habit instance, checks it off several times, changes habit end datetime 
         and then checks habit again. The streak should be reset to zero, because the allotted time for 
         performing the habit has been exceeded. After reseting, the program adds 1 to streak, because the habit 
         has been checked off. Function asserts that the current streak is equal to 1."""
