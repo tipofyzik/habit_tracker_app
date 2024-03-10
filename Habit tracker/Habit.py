@@ -142,11 +142,11 @@ class Habit:
         end_date = datetime.strptime(self.end_date, '%Y-%m-%d')
         end_datetime = datetime.combine(end_date, end_time)
 
-        time_difference = [end_datetime.hour - current_datetime.hour,
-                           end_datetime.day - current_datetime.day,
-                           end_datetime.isocalendar().week - current_datetime.isocalendar().week,
-                           end_datetime.month - current_datetime.month,
-                           end_datetime.year - current_datetime.year]     
+        time_difference = [current_datetime.hour -end_datetime.hour,
+                           current_datetime.day - end_datetime.day,
+                           current_datetime.isocalendar().week - end_datetime.isocalendar().week,
+                           current_datetime.month - end_datetime.month,
+                           current_datetime.year - end_datetime.year]     
         time_excess = False
         range_codes = {
             "Hour": 5,

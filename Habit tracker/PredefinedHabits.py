@@ -21,6 +21,64 @@ def predefine_habits() -> list[Habit]:
 
 
 
+def check_off_habit(predefined_habit: Habit, new_end_datetime: datetime) -> None:
+    """
+    Updates streaks of a habit.
+    
+    Parameters:
+        predefined_habit: Habit
+            Predefined habit to be checked-off.
+        new_end_datetime: datetime
+            New end date and time for habit. This is an analog to \'current_datetime\' in case 
+            we check habit off in real time."""
+    if predefined_habit.end_time is not None and predefined_habit.end_date is not None:
+        check_time_excess(predefined_habit, new_end_datetime)
+
+    predefined_habit.current_streak += 1
+    if predefined_habit.current_streak>predefined_habit.longest_streak:
+        predefined_habit.longest_streak = predefined_habit.current_streak
+
+def check_time_excess(predefined_habit: Habit, new_end_datetime: datetime) -> None:
+    """
+    Checks whether the user exceeded time to complete a habit within a specific period.
+    Habit is broken if the time difference between current time and the time of the last check
+    greater than 1 periodicity. 
+    E.g.: Periodicity is \'Week\'. Assume the user start the habit \'this\' week. If the user don't check it off
+    until the end of the \'next\' week, the habit's currenet streak would be reset.
+
+    Parameters:
+        predefined_habit: Habit
+            Predefined habit to be checked-off.
+        new_end_datetime: datetime
+            New end date and time for habit. This is an analog to \'current_datetime\' in case 
+            we check habit off in real time."""
+    end_time = datetime.strptime(predefined_habit.end_time, '%H:%M:%S').time()
+    end_date = datetime.strptime(predefined_habit.end_date, '%Y-%m-%d')
+    end_datetime = datetime.combine(end_date, end_time)
+
+    time_difference = [end_datetime.hour - new_end_datetime.hour,
+                        end_datetime.day - new_end_datetime.day,
+                        end_datetime.isocalendar().week - new_end_datetime.isocalendar().week,
+                        end_datetime.month - new_end_datetime.month,
+                        end_datetime.year - new_end_datetime.year]     
+    time_excess = False
+    range_codes = {
+        "Hour": 5,
+        "Day": 4,
+        "Week": 3,
+        "Month": 2,
+        "Year": 1
+    }
+    for i in range(range_codes[predefined_habit.periodicity]):
+        if abs(time_difference[-i-1])>1:
+            time_excess = True
+
+    if time_excess:
+        predefined_habit.current_streak = 0
+        print("Time has passed and your current streak has been reset!")
+
+
+
 def generate_habit_history(predefined_habit: Habit, database: Database) -> None:
     """
     Generates approximate history for a certain habit. Used only to examplify how habit could be defined and developed.
@@ -36,18 +94,8 @@ def generate_habit_history(predefined_habit: Habit, database: Database) -> None:
     predefined_habit.start_time = start_time
     predefined_habit.start_date = start_date
 
-    def check_off_predefined_habit(predefined_habit: Habit) -> None:
-        """
-        Updates streaks of a predefined habit.
-        
-        Parameters:
-            habit: Habit
-                Habit to \'check-off\'"""
-        predefined_habit.current_streak += 1
-        if predefined_habit.current_streak>predefined_habit.longest_streak:
-            predefined_habit.longest_streak = predefined_habit.current_streak
 
-    def update_data(predefined_habit: Habit) -> None:
+    def update_data(predefined_habit: Habit, end_datetime: datetime) -> None:
         """
         Updates end datetime, state and streaks of a predefined habit. It also updates logs.
         
@@ -58,7 +106,7 @@ def generate_habit_history(predefined_habit: Habit, database: Database) -> None:
         end_date = end_datetime.strftime("%Y-%m-%d")
         predefined_habit.end_time = end_time
         predefined_habit.end_date = end_date
-        check_off_predefined_habit(predefined_habit)
+        check_off_habit(predefined_habit, end_datetime)
         database.update_habit_characteristic_in_database(predefined_habit, ["end_time", "end_date"], 
                                                          [predefined_habit.end_time, predefined_habit.end_date])
         if predefined_habit.complete_habit():
@@ -69,13 +117,14 @@ def generate_habit_history(predefined_habit: Habit, database: Database) -> None:
 
     for i in range(predefined_habit.time_span):
         if predefined_habit.periodicity == "Hour":
-            end_datetime = start_datetime + relativedelta(hours=i, minutes=random.randint(1, 59))
+            delta = relativedelta(hours=i, minutes=random.randint(1, 59 - start_datetime.minute))
         elif predefined_habit.periodicity == "Day":
-            end_datetime = start_datetime + relativedelta(days=i, hours=random.randint(1, 23))
+            delta = relativedelta(days=i, hours=random.randint(1, 23 - start_datetime.hour))
         elif predefined_habit.periodicity == "Week":
-            end_datetime = start_datetime + relativedelta(weeks=i, days=random.randint(1, 6))
+            delta = relativedelta(weeks=i, days=random.randint(1, 6 - start_datetime.weekday()))
         elif predefined_habit.periodicity == "Month":
-            end_datetime = start_datetime + relativedelta(months=i, days=random.randint(1, 30))
+            delta = relativedelta(months=i, days=random.randint(1, 30 - start_datetime.day))
         elif predefined_habit.periodicity == "Year":
-            end_datetime = start_datetime + relativedelta(years=i, days=random.randint(1, 364))
-        update_data(predefined_habit)
+            delta = relativedelta(years=i)
+        end_datetime = start_datetime + delta
+        update_data(predefined_habit, end_datetime)
