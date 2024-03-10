@@ -48,23 +48,25 @@ Once you run the appliation, you will see the greeting message and the menu. The
 
 
 ## Examples of usage
-This video shows how you can add, update and delete habit. Here, I create new habit, show that it's tracked with the help of analitics module, change habit characteristics and show that they have been changed.  
+**·**This video shows how you can add, update and delete habit. Here, I create new habit, show that it's tracked with the help of analitics module, change habit characteristics and show that they have been changed.  
 
 
 https://github.com/tipofyzik/habit_tracker_app/assets/84290230/c09418b7-7b2c-4702-b1b4-9fcd9115c8c8.mp4
 
-Here, I show the example how the habit can be checked-off and completed. You can also see how the applications demostrates history and what analytics module show according to the request 'Show the whole information of a certain habit'.
+
+**·**Here, I show the example how the habit can be checked-off and completed. You can also see how the applications demostrates history and what analytics module show according to the request 'Show the whole information of a certain habit'.
 
 
 https://github.com/tipofyzik/habit_tracker_app/assets/84290230/d9635d9f-15f9-4825-97f6-c0d395d482e0.mp4
 
-The following demonstrates how analytics section works (each function).  
+
+**·**The following demonstrates how analytics section works (each function).  
 
 
 https://github.com/tipofyzik/habit_tracker_app/assets/84290230/177f6b91-875f-41fe-a205-a0f2b5862593.mp4
 
 
-The last video shows additional options section. Here, you can upload predefined habits (read more about it below), delete them, and delete all defined habits (tracked and developed).  
+**·**The last video shows additional options section. Here, you can upload predefined habits (read more about it below), delete them, and delete all defined habits (tracked and developed).  
 
 
 https://github.com/tipofyzik/habit_tracker_app/assets/84290230/86f71dc4-769e-4e58-95b8-fb88f8921a42.mp4
