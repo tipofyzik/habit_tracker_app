@@ -95,7 +95,8 @@ Let's assume again that the habit has started on the 2nd of January and performe
 # 4. Further developing
 My project has cases which can be further developed:  
 1. The option of 'upcoming events' can be added. If the user would like to look at the events that they have to accomplish this day/week/month/etc., the program would dispay these events accordingly. This feature would make it more convenient to track one's habits.  
-2. The GUI can be added.
+2. The GUI can be added. This will increase usability.
+3. The analitics module can be extended to make the analysis more complex and representative simultaneously. For example, graphs that represents successful completion of habits can be added.  
 
 # 5. Sources
 [1] https://www.python.org/  
