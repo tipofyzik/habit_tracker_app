@@ -69,7 +69,7 @@ class TestHabitClass(unittest.TestCase):
         habit_obj.complete_habit()
         self.assertEqual(habit_obj.state, "Completed")
 
-    def test_streak_reset_to_zero(self) -> None:
+    def test_streak_reset(self) -> None:
         """
         Creates a habit instance, checks it off several times, changes habit end time 
         and then checks habit again. The streak should be reset to zero, because the allotted time for 
