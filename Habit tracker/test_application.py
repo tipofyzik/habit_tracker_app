@@ -120,7 +120,7 @@ class TestDatabaseAndDatabaseAnalyzer(unittest.TestCase):
         extracted_info = self.analyzer.return_detailed_information_about_habit(habit_obj.name)[1]
         self.assertEqual(habit_info, extracted_info)
 
-        # Delete data not to raise error in the next tests
+        # Delete data from database not to raise error in the next tests
         self.database.delete_habit_from_database(habit_obj.name)
 
     def test_habit_update(self) -> None:
@@ -141,9 +141,10 @@ class TestDatabaseAndDatabaseAnalyzer(unittest.TestCase):
         retrived_habit_info = self.analyzer.return_detailed_information_about_habit(habit_obj.name)[1]
         retrieved_habit = Habit(*retrived_habit_info)
 
+        self.assertEqual(retrieved_habit.periodicity, "Week")
         self.assertEqual(habit_obj.periodicity, retrieved_habit.periodicity)
         
-        # Delete data not to raise error in the next tests
+        # Delete data from database not to raise error in the next tests
         self.database.delete_habit_from_database(habit_obj.name)
 
     def test_habit_deletion_from_database(self) -> None:
@@ -166,18 +167,27 @@ class TestDatabaseAndDatabaseAnalyzer(unittest.TestCase):
         """
         Test functions that are responsible for returning longest streak
         among all habits and the longest streak of a give, respectively."""
-        habit_obj1 = Habit('name1', 'Day', 0)
-        habit_obj1.check_off_habit()
-        habit_obj2 = Habit('name2', 'Week', 0)
+        habit_obj1 = Habit('name1', 'Day', 15)
+        range1 = 7
+        for _ in range(range1):
+            habit_obj1.check_off_habit()
+
+        habit_obj2 = Habit('name2', 'Week', 7)
+        range2 = 4
+        for _ in range(range2):
+            habit_obj2.check_off_habit()
+
         self.database.insert_habit_to_database(habit_obj1)
         self.database.insert_habit_to_database(habit_obj2)
 
         longest_streak_of_all_habits = self.analyzer.return_longest_streak_of_all_habits()[1]
         longest_streaks_of_given_habit = self.analyzer.return_longest_streaks_of_given_habit(habit_obj2.name)
+        self.assertEqual(longest_streak_of_all_habits, range1)
         self.assertEqual(longest_streak_of_all_habits, habit_obj1.longest_streak)
+        self.assertEqual(longest_streaks_of_given_habit, range2)
         self.assertEqual(longest_streaks_of_given_habit, habit_obj2.longest_streak)
 
-        # Delete data not to raise error in the next tests
+        # Delete data from database not to raise error in the next tests
         self.database.delete_habit_from_database(habit_obj1.name)
         self.database.delete_habit_from_database(habit_obj2.name)               
 
@@ -215,10 +225,74 @@ class TestDatabaseAndDatabaseAnalyzer(unittest.TestCase):
         compare_class_objects(habit_obj1, habits[0])
         compare_class_objects(habit_obj2, habits[1])
 
-        # Delete data not to raise error in the next tests
+        # Delete data from database not to raise error in the next tests
         self.database.delete_habit_from_database(habit_obj1.name)
         self.database.delete_habit_from_database(habit_obj2.name)
 
+    def test_detailed_habit_info(self) -> None:
+        """Tests return_detailed_information_about_habit function in DatabaseAnalyzer module.
+        Creates habit, updates it several times, checks it off and finally compares data in database 
+        with the habit attributes itself.
+        
+        No parameters."""
+        def check_off_loop(habit_obj: Habit, loop_range: int):
+            """Checks habit off for several times.
+            
+            Parameters:
+                habit: Habit
+                    Habit to be checked-off.
+                loop_range: int
+                    The number for for-loop."""
+            for _ in range (loop_range):
+                habit_obj.check_off_habit()
+                self.database.update_habit_characteristic_in_database(habit_obj, 
+                                                                    ["end_time", "end_date"], 
+                                                                    [habit_obj.end_time, habit_obj.end_date])
+                if habit_obj.complete_habit():
+                    self.database.update_habit_characteristic_in_database(habit_obj, ["state"], [habit_obj.state])
+                self.database.update_habit_characteristic_in_database(habit_obj, 
+                                                                    ["current_streak", "longest_streak"], 
+                                                                    [habit_obj.current_streak, habit_obj.longest_streak])
+
+        habit_obj = Habit("name", "Day", 4)
+        self.database.insert_habit_to_database(habit_obj)
+        habit_obj.update_habit_characteristic("periodicity", "Month")
+        self.database.update_habit_characteristic_in_database(habit_obj, ["periodicity"], [habit_obj.periodicity])
+        range1=3
+        check_off_loop(habit_obj, range1)
+
+        habit_obj.update_habit_characteristic("time_span", 11)
+        self.database.update_habit_characteristic_in_database(habit_obj, ["time_span"], [habit_obj.time_span])
+        range2 = 5
+        check_off_loop(habit_obj, range2)
+        
+        extracted_habit = self.analyzer.return_detailed_information_about_habit(habit_obj.name)[1]
+        extracted_habit = Habit(*extracted_habit)
+        self.assertEqual(extracted_habit.name, "name")
+        self.assertEqual(habit_obj.name, extracted_habit.name)
+
+        self.assertEqual(extracted_habit.periodicity, "Month")
+        self.assertEqual(habit_obj.periodicity, extracted_habit.periodicity)
+
+        self.assertEqual(extracted_habit.time_span, 11)
+        self.assertEqual(habit_obj.time_span, extracted_habit.time_span)
+
+        self.assertEqual(extracted_habit.state, "In progress")
+        self.assertEqual(habit_obj.state, extracted_habit.state)
+
+        self.assertEqual(extracted_habit.current_streak, range1+range2)
+        self.assertEqual(habit_obj.current_streak, extracted_habit.current_streak)
+
+        self.assertEqual(extracted_habit.longest_streak, range1+range2)
+        self.assertEqual(habit_obj.longest_streak, extracted_habit.longest_streak)
+
+        self.assertEqual(habit_obj.start_time, extracted_habit.start_time)
+        self.assertEqual(habit_obj.start_date, extracted_habit.start_date)
+        self.assertEqual(habit_obj.end_time, extracted_habit.end_time)
+        self.assertEqual(habit_obj.end_date, extracted_habit.end_date)
+
+        # Delete data from database not to raise error in the next tests
+        self.database.delete_habit_from_database(habit_obj.name)
 
 
 

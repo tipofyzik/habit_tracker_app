@@ -84,7 +84,7 @@ class Database:
     # Function for debugging
     def delete_tables_in_database(self) -> None:
         """
-        Deletes table structures frum database.
+        Deletes table structures from database. It is useful if you restructure your tables (you want more/less columns).
         Only for developers!"""
         cursor = self.database.cursor()
         cursor.execute("DROP TABLE IF EXISTS habits")
