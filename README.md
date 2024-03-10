@@ -44,7 +44,7 @@ Once you run the appliation, you will see the greeting message and the menu. The
 **·** View habit history - you can look at "checking-off" history of a certain habit. For example, you should accomplish you habit day for 20 days and let's say you'd done 17/20 days. This option will show you last 10 succesful completions of the habit.  
 **·** Analyze habits - suggest you to analyze existing habits. You can look at all developed habits or ask for the longest streak of a certain habit.  
 **·** Additional options - here you can upload/delete predefined habits or delete all your habits at all.  
-**·** Quit - terminates the applicaiton.  
+**·** Quit - exits the applicaiton.  
 
 
 ## Examples of usage
