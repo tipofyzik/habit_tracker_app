@@ -76,13 +76,13 @@ https://github.com/tipofyzik/habit_tracker_app/assets/84290230/86f71dc4-769e-4e5
 # 3. Implementation specifics
 You can note that my project on github doesn't contain any database files for the application to work. This is because it will be created once you run the program.  
 
-**·** My project has 2 possible databases: "AppDatabase.db" and "TestDatabase.db". The first one creates once you run "HabitTrackingApp.py" file and the other one creates when you run "test_application.py" file. These databases don't affect each other and serve for the application to work and to test the application, respectively.  
+**·** My project has 2 possible databases: "AppDatabase.db" and "TestDatabase.db". The first one creates once you run "HabitTrackingApp.py" file and the other one creates when you run "test_application.py" file. These databases don't affect each other and serve for the application to work and to test it, respectively.  
 
 **·** The "PredefinedHabits.py" module contains the functions that create habit objects and their history (an example how these habits could be developed). This is important to note that history varies a little bit each time you upload predefined_habits. This is because history creation contains random functions to make it more 'live' (like people don't always follow the shedule and make something earlier or later a little bit). Moreover, all habits are marked as 'completed'. For this reason, go to 'Analyze habits' -> 'Show me all already developed habits' to look at them.  
 
 **·** The "PredefinedHabits.py" module also contains its own 'check-off' functions. They are familiar to functions that I wrote in CLI module but a little different. The functions in "CLI.py" module configured for real-time checking while functions in "PredefinedHabits.py" module generate 'made up' history. In other words, in the last module functions compare generated dates between each other but not the current time and the time of the last check-off.
 
-**·** In the "test_application.py" module you can find 12 tests, starting with pretty simple and ending with more complex case (e.g., create habit, check-it-off several times, change end_time, check off again, etc.). This module tests the core of the application: "Habit.py", "Database.py", "DatabaseAnalyzer.py". "CLI.py" module is based on the mentioned three modules. For this reason and the fact that the module with predefined habits is simialr to what I wrote in tested module, "CLI.py" and "PredefinedHabits.py" were tested manually.  
+**·** In the "test_application.py" module you can find 12 tests, starting with pretty simple and ending with more complex case (e.g., create habit, check-it-off several times, change end_time, check off again, etc.). This module tests the core of the application: "Habit.py", "Database.py", "DatabaseAnalyzer.py". "CLI.py" module is based on the mentioned three modules. For this reason and the fact that the module with predefined habits is simialr to what I wrote in the core modules, "CLI.py" and "PredefinedHabits.py" were tested manually.  
 
 **Here, I explain when the application counts habit completion as 'successful' and when not**.  
 Let's say the user defines their daily habit on the 2nd of January (red cell). Suppose the user wants to develop this habit for a week and begins to accomplish it on the 4th of January. If the user succesfully completes (green cell) the habit every day for the entire week, without any breaks, we say the habit to be developed and the user has achived their goal (image below). With each consecutive successful completion of the habit the streak counter increases, e.g., if there are 5 consecutive completions, habit streak would be 5.  
@@ -100,7 +100,7 @@ Let's assume again that the habit has started on the 2nd of January and performe
 My project has cases which can be further developed:  
 1. The option of 'upcoming events' can be added. If the user would like to look at the events that they have to accomplish this day/week/month/etc., the program would dispay these events accordingly. This feature would make it more convenient to track one's habits.  
 2. The GUI can be added. This will increase usability.
-3. The analitics module can be extended to make the analysis more complex and representative simultaneously. For example, graphs that represents successful completion of habits can be added.  
+3. The analitics module can be extended to make the analysis more complex and representative simultaneously. For example, a graph illustrating the relationship between successful habit completion and date can be added.  
 
 # 5. Sources
 [1] https://www.python.org/  
