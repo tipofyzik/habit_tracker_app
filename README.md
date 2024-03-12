@@ -32,10 +32,9 @@ To run the application you should accomplish the following steps:
 2. Open the command-line interface and specify the path to directory where "HabitTrackingApp.py" file is located. Do so by writing:  
 **cd Your/path/to/file**  
 Example: cd C:\Users\user\Downloads\Habit tracker
-3. Now, write the following to run the application:  
+3.1. Now, write the following to run the application:  
 **python HabitTrackingApp.py**  
-
-_**Note:**_ To run tests for the project perform step 2 and then write:
+3.2. To run tests for the project perform step 2 and then write:
 **python test_application.py**
 
 Once you run the appliation, you will see the greeting message and the menu. The menu contains 6 options:  
