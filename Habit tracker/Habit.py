@@ -29,20 +29,20 @@ class Habit:
         time_span: int
             Duration for which the user wants to develop the habit. Combining with periodicity we 
             set, for example, 2 days or 5 weeks. 
-        state: str, optimal
+        state: str
             The state of a habit, namely, \'In progress\'/\'Completed\'.
             Defaults to \'In progress\'.
-        current_streak: int, optimal
+        current_streak: int
             The current streak represents a number of successful, consequtive habit executions.
-        longest_strek: int, optimal
+        longest_strek: int
             Stores the longest streak that has ever been achieved for a habit.
-        start_time: str, optimal
+        start_time: str
             Stores a time of creation, i.e., starting a habit.
-        start_date: str, optimal
+        start_date: str
             Stores a date of creation, i.e., starting a habit.
-        end_time: str, optimal
+        end_time: str
             Stores the time of finishing, i.e., when habit is completed.
-        end_time: str, optimal
+        end_time: str
             Stores the date of finishing, i.e., when habit is completed."""
 
     def __init__ (self, name: str, periodicity: str, 
@@ -51,8 +51,6 @@ class Habit:
                   start_time: str = None, start_date: str = None,
                   end_time: str = None, end_date: str = None) -> None:
         """
-        Constructs all the necessary attributes for the person object.
-
         Parameters:
             name: str
                 Name to be given to the habit.

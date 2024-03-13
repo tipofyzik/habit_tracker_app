@@ -9,8 +9,10 @@ class Database:
     A class to represent a database to store and retrieve information.
     
     Attributes:
-    """
-    
+        name: str
+            Name to be given for database.
+        database: sqlite3.Connection
+            Database that represents by this class."""
     def __init__(self, name: str = "AppDatabase.db"):
         self.name = name
         self.database = self.connect_database(name)

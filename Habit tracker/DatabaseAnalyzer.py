@@ -9,8 +9,8 @@ class DatabaseAnalyzer:
     A class to represent a database analyzer.
     
     Attributes:
-    """
-
+            database_name: str
+                Name of the database to be analyzed."""
     def __init__(self, database_name: str) -> None:
         """
         Parameters:

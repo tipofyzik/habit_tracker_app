@@ -22,6 +22,7 @@ class CommandLineInterface:
         habit_container: dict[str, Habit]
             Contains all ever defined habits."""
     def __init__(self, database_name: str = "AppDatabase.db") -> None:
+        """"""
         self.database = Database(database_name)
         self.analyzer = DatabaseAnalyzer(self.database.name)
         self.habit_container: dict[str, Habit] = {}
